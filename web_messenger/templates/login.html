@@ -1,198 +1,94 @@
+<!DOCTYPE html>
 {% load staticfiles %}
-<html>
+<html lang="en" >
 
 <head>
-
   <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <title> Login</title>
+  <title>Material Login Form</title>
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
-    <style>
-@import url(http://fonts.googleapis.com/css?family=Exo:100,200,400);
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
 
-body{
-	margin: 0;
-	padding: 0;
-	background: #fff;
+      <link rel="stylesheet" href="{% static 'css/style2.css' %}">
 
-	color: #fff;
-	font-family: Arial;
-	font-size: 12px;
-}
-
-.body{
-	position: absolute;
-	top: -20px;
-	left: -20px;
-	right: -40px;
-	bottom: -40px;
-	width: auto;
-	height: auto;
-	background-image: url(http://ginva.com/wp-content/uploads/2012/07/city-skyline-wallpapers-008.jpg);
-	background-size: cover;
-	-webkit-filter: blur(5px);
-	z-index: 0;
-}
-
-.grad{
-	position: absolute;
-	top: -20px;
-	left: -20px;
-	right: -40px;
-	bottom: -40px;
-	width: auto;
-	height: auto;
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
-	z-index: 1;
-	opacity: 0.7;
-}
-
-.header{
-	position: absolute;
-	top: calc(50% - 35px);
-	left: calc(50% - 255px);
-	z-index: 2;
-}
-
-.header div{
-	float: left;
-	color: #fff;
-	font-family: 'Exo', sans-serif;
-	font-size: 35px;
-	font-weight: 200;
-}
-
-label {
-color: #800080;
-font-weight: bold;
-display: block;
-width: 150px;
-height: 150px;
-float: left;
-font-size:medium
-}
-
-
-.header div span{
-	color: #5379fa !important;
-}
-
-.login{
-	position: absolute;
-	top: calc(50% - 75px);
-	left: calc(50% - 50px);
-	height: 150px;
-	width: 350px;
-	padding: 10px;
-	z-index: 2;
-}
-
-.login input[type=text]{
-	width: 250px;
-	height: 30px;
-	background: transparent;
-	border: 1px solid rgba(255,255,255,0.6);
-	border-radius: 2px;
-	color: #fff;
-	font-family: 'Exo', sans-serif;
-	font-size: 16px;
-	font-weight: 400;
-	padding: 4px;
-}
-
-.login input[type=password]{
-	width: 250px;
-	height: 30px;
-	background: transparent;
-	border: 1px solid rgba(255,255,255,0.6);
-	border-radius: 2px;
-	color: #fff;
-	font-family: 'Exo', sans-serif;
-	font-size: 16px;
-	font-weight: 400;
-	padding: 4px;
-	margin-top: 10px;
-}
-
-.login input[type=submit]{
-	width: 260px;
-	height: 35px;
-	background: #fff;
-	border: 1px solid #fff;
-	cursor: pointer;
-	border-radius: 2px;
-	color: #a18d6c;
-	font-family: 'Exo', sans-serif;
-	font-size: 16px;
-	font-weight: 400;
-	padding: 6px;
-	margin-top: 10px;
-}
-
-.login input[type=submit]:hover{
-	opacity: 0.8;
-}
-
-.login input[type=submit]:active{
-	opacity: 0.6;
-}
-
-.login input[type=text]:focus{
-	outline: none;
-	border: 1px solid rgba(255,255,255,0.9);
-}
-
-.login input[type=password]:focus{
-	outline: none;
-	border: 1px solid rgba(255,255,255,0.9);
-}
-
-.login input[type=submit]:focus{
-	outline: none;
-}
-
-::-webkit-input-placeholder{
-   color: rgba(255,255,255,0.6);
-}
-
-::-moz-input-placeholder{
-   color: rgba(255,255,255,0.6);
-}
-</style>
-
-    <script src="js/prefixfree.min.js"></script>
-
+  
 </head>
 
 <body>
-<form method="post" action="loginvalidation">
-    {% csrf_token %}
-  <div class="body"></div>
-		<div class="grad"></div>
-		<div class="header">
-			<div>Site<span>Random</span></div>
-		</div>
-		<br>
-		<div class="login">
-				<input type="text" placeholder="username" name="user"><br>
-				<input type="password" placeholder="password" name="password"><br>
-				<input type="submit" value="Login"><br>
-				<a href="registration" name="Registration">Registration Here
 
-				</a>
-			<br><label >{{data.status}}</label>
-
-		</div>
-<div>
-	<a href="registration.html" name="Registration">Registration Here</a>
-
+  
+<!-- Mixins-->
+<!-- Pen Title-->
+<div class="pen-title">
+  <h1>Login Form</h1><span></span>
 </div>
-	<div>
 
-	</div>
-  <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
-</form>
+<div class="container">
+  <div class="card"></div>
+  <div class="card">
+    <h1 class="title">Login</h1>
+    <form method="post" action="loginvalidation">
+      {% csrf_token %}
+      <div class="input-container">
+        <input type="text" id="user" required="required"/>
+        <label for="user">Name</label>
+        <div class="bar"></div>
+      </div>
+      <div class="input-container">
+        <input type="password" id="pwd" required="required"/>
+        <label for="pwd">Password</label>
+        <div class="bar"></div>
+      </div>
+      <div class="button-container">
+        <button><span>Go</span></button>
+      </div>
+
+    </form>
+  </div>
+  <div class="card alt">
+    <div class="toggle"></div>
+    <h1 class="title">Register
+      <div class="close"></div>
+    </h1>
+    <form action="register" method="post">
+      {% csrf_token %}
+      <div class="input-container">
+        <input type="text" id="unm" required="required"/>
+        <label for="unm">Username</label>
+        <div class="bar"></div>
+      </div>
+      <div class="input-container">
+        <input type="password" id="pass" required="required"/>
+        <label for="pass">Password</label>
+        <div class="bar"></div>
+      </div>
+      <div class="input-container">
+        <input type="password" id="re_pass" required="required"/>
+        <label for="re_pass">Repeat Password</label>
+        <div class="bar"></div>
+      </div>
+      <div class="input-container">
+        <input type="email" id="email_id" required="required" requird autocomplete="off"/>
+        <label for="email_id">Email</label>
+        <div class="bar"></div>
+      </div>
+      <div class="button-container">
+        <button><span>Next</span></button>
+      </div>
+    </form>
+  </div>
+</div>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+  
+
+    <script type="text/javascript" src="{% static 'scripts/index.js'%}"></script>
+
+
+
+
 </body>
 
 </html>

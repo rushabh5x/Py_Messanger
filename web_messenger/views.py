@@ -7,7 +7,7 @@ def index(request):
 
 def login(request):
 
-    return render(request,'login1.html',{})
+    return render(request,'login.html',{})
 
 def validation(request):
     unm1=request.POST['user']
@@ -21,10 +21,6 @@ def registration(request):
 
 def register(request):
 
-    fnm1=request.POST['fnm']
-    lnm1=request.POST['lnm']
-    email1=request.POST['email']
-    password1=request.POST['pass']
 
     return HttpResponse("hello")
 
