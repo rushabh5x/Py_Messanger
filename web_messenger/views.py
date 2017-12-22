@@ -30,7 +30,8 @@ def register(request):
         r = requests.get('http://localhost/messenger/3.php', params={'type': 'register', 'e_id': email1, 'pw': password1,'name':name})
         return HttpResponse(r.text)
     else:
-        return HttpResponse("password does not match")
+        dict = {'status': 'password does not match'}
+        return HttpResponse(render(request, 'login.html', {'data': dict}))
 def test(request):
     return render(request,'test.html',{})
 
