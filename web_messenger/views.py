@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-import requests
+
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
 def login(request):
 
-    return render(request,'login1.html',{})
+    return render(request,'login.html',{})
 
 def validation(request):
     unm1=request.POST['user']
