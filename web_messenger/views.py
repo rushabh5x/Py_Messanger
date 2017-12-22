@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import requests
 
+
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
@@ -21,13 +22,15 @@ def registration(request):
 
 def register(request):
 
-    fnm1=request.POST['fnm']
-    lnm1=request.POST['lnm']
+    name=request.POST['name']
     email1=request.POST['email']
     password1=request.POST['pass']
-    r = requests.get('http://localhost/messenger/3.php', params={'type': 'register', 'e_id': email1, 'pw': password1,'f_name':fnm1,'l_name':lnm1})
-    return HttpResponse(r.text)
-
+    re_pass=request.POST['re_pass']
+    if(password1==re_pass):
+        r = requests.get('http://localhost/messenger/3.php', params={'type': 'register', 'e_id': email1, 'pw': password1,'name':name})
+        return HttpResponse(r.text)
+    else:
+        return HttpResponse("password does not match")
 def test(request):
     return render(request,'test.html',{})
 
