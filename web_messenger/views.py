@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
+import requests
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
@@ -12,8 +12,8 @@ def login(request):
 def validation(request):
     unm1=request.POST['user']
     pass1=request.POST['password']
-
-    return HttpResponse(unm1)
+    r=requests.get('http://localhost/messenger/3.php',params={'type':'login','un':unm1,'pw':pass1})
+    return HttpResponse(r.text)
     #excep
 
 def registration(request):
@@ -25,8 +25,8 @@ def register(request):
     lnm1=request.POST['lnm']
     email1=request.POST['email']
     password1=request.POST['pass']
-
-    return HttpResponse("hello")
+    r = requests.get('http://localhost/messenger/3.php', params={'type': 'register', 'e_id': email1, 'pw': password1,'f_name':fnm1,'l_name':lnm1})
+    return HttpResponse(r.text)
 
 def test(request):
     return render(request,'test.html',{})
