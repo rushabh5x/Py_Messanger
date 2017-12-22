@@ -32,12 +32,12 @@
     <form method="post" action="loginvalidation">
       {% csrf_token %}
       <div class="input-container">
-        <input type="text" id="user" required="required"/>
+        <input type="text" id="user" name="user" required="required"/>
         <label for="user">Name</label>
         <div class="bar"></div>
       </div>
       <div class="input-container">
-        <input type="password" id="pwd" required="required"/>
+        <input type="password" id="pwd" name="pwd" required="required"/>
         <label for="pwd">Password</label>
         <div class="bar"></div>
       </div>
@@ -55,23 +55,23 @@
     <form action="register" method="post">
       {% csrf_token %}
       <div class="input-container">
-        <input type="text" id="unm" required="required"/>
-        <label for="unm">Username</label>
+        <input type="email" id="email_id" name="email" required="required"/>
+        <label for="email_id">Email</label>
         <div class="bar"></div>
       </div>
       <div class="input-container">
-        <input type="password" id="pass" required="required"/>
+        <input type="password" id="pass" name="pass" required="required"/>
         <label for="pass">Password</label>
         <div class="bar"></div>
       </div>
       <div class="input-container">
-        <input type="password" id="re_pass" required="required"/>
+        <input type="password" id="re_pass" name="re_pass" required="required"/>
         <label for="re_pass">Repeat Password</label>
         <div class="bar"></div>
       </div>
       <div class="input-container">
-        <input type="email" id="email_id" required="required" requird autocomplete="off"/>
-        <label for="email_id">Email</label>
+        <input type="text" id="name" name="name" required="required"  autocomplete="off"/>
+        <label for="name">Name</label>
         <div class="bar"></div>
       </div>
       <div class="button-container">
