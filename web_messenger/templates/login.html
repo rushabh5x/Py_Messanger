@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Material Login Form</title>
+  <title>Login Form</title>
   
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
@@ -32,12 +32,12 @@
     <form method="post" action="loginvalidation">
       {% csrf_token %}
       <div class="input-container">
-        <input type="text" id="user" required="required"/>
-        <label for="user">Name</label>
+        <input type="text" id="user" required="required" name="user"/>
+        <label for="user">Username</label>
         <div class="bar"></div>
       </div>
       <div class="input-container">
-        <input type="password" id="pwd" required="required"/>
+        <input type="password" id="pwd" required="required" name="pwd"/>
         <label for="pwd">Password</label>
         <div class="bar"></div>
       </div>
@@ -56,7 +56,7 @@
       {% csrf_token %}
       <div class="input-container">
         <input type="text" id="unm" required="required"/>
-        <label for="unm">Username</label>
+        <label for="unm">Name</label>
         <div class="bar"></div>
       </div>
       <div class="input-container">
