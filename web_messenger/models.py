@@ -132,7 +132,7 @@ class Message(models.Model):
     id = models.IntegerField(db_column='Id', primary_key=True)  # Field name made lowercase.
     sender = models.CharField(db_column='Sender', max_length=20)  # Field name made lowercase.
     receiver = models.CharField(db_column='Receiver', max_length=20)  # Field name made lowercase.
-    message = models.CharField(db_column='Message', max_length=20)  # Field name made lowercase.
+    message = models.CharField(db_column='Message', max_length=100)  # Field name made lowercase.
     creation_time = models.TimeField(db_column='Creation_time')  # Field name made lowercase.
     status = models.CharField(db_column='Status', max_length=20)  # Field name made lowercase.
 

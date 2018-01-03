@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.template import loader
 from django.contrib import messages
 import requests
-import json
+import simplejson as json
 
 
 def index(request):
@@ -47,10 +47,13 @@ def register(request):
         messages.info(request, 'password does not match')
         dict = {'status': 'password does not match'}
     return HttpResponseRedirect(reverse('login'))
+
 def test(request):
     r=requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': 'abc@xyz.com'})
-    x=json.loads(r.text)
-    return HttpResponse(x['id'])
+    bhindi=json.loads(r.text)
+    request.session["user"]="abc@xyz.com"
+    return render(request,'xyz.html',{'my_dict':r.json})
+    #return HttpResponse(r.json())
 
 
 # Cre3ate    your views here.
