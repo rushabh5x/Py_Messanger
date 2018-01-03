@@ -47,7 +47,8 @@ def register(request):
         dict = {'status': 'password does not match'}
     return HttpResponseRedirect(reverse('login'))
 def test(request):
-    return render(request,'test.html',{})
+    r=requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': 'abc@xyz.com'})
+    return HttpResponse(r.text)
 
 
 
