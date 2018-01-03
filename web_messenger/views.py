@@ -52,7 +52,9 @@ def test(request):
     r=requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': 'abc@xyz.com'})
     bhindi=json.loads(r.text)
     request.session["user"]="abc@xyz.com"
-    return render(request,'xyz.html',{'my_dict':r.json})
+    r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': 'abc@xyz.com'})
+
+    return render(request,'xyz.html',{'my_dict':r.json,'my_dict2':r1.json()})
     #return HttpResponse(r.json())
 
 
