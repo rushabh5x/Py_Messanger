@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.template import loader
 from django.contrib import messages
 import requests
+import json
 
 
 def index(request):
@@ -48,8 +49,8 @@ def register(request):
     return HttpResponseRedirect(reverse('login'))
 def test(request):
     r=requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': 'abc@xyz.com'})
-    return HttpResponse(r.text)
-
+    x=json.loads(r.text)
+    return HttpResponse(x['id'])
 
 
 # Cre3ate    your views here.
