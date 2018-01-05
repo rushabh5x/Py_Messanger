@@ -818,7 +818,7 @@ body {
           <div class="col-sm-1 col-xs-1 reply-recording">
             <i class="fa fa-microphone fa-2x" aria-hidden="true"></i>
           </div>
-          <div class="col-sm-1 col-xs-1 reply-send">
+          <div class="col-sm-1 col-xs-1 reply-send" onClick="sendMessage()">
             <i class="fa fa-send fa-2x" aria-hidden="true"></i>
           </div>
         </div>
@@ -831,8 +831,9 @@ body {
 
   <!-- App End -->
 </body>
-  <script type="text/javascript">
 
+
+<script type="text/javascript">
 
 
 function my_fun1()
@@ -843,10 +844,6 @@ function my_fun2(size)
 {
   document.getElementById("side-two1").style.left=size
 }
-
-
-</script>
-<script type="text/javascript">
 // using jQuery
 function getCookie(name) {
     var cookieValue = null;
@@ -880,7 +877,17 @@ $.ajaxSetup({
             document.getElementById("html1").innerHTML=data
             document.getElementById("name_chat").innerHTML=name
       })
-}
+  }
+  function sendMessage(){
+      document.getElementById("comment").value=""
+      $.post("/web_messanger/sendmessage",{sender:'abc@xyz.com',receiver:'def@xyz.com',text:'hi'}).done(function(data){
+            document.getElementById("html1").innerHTML=data
+            document.getElementById("name_chat").innerHTML='def@xyz.com'
+      })
+  }
+  function clearText(){
+      document.getElementById("comment").value=""
+  }
 </script>
 
 

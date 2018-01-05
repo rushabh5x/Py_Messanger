@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^registration',views.registration,name='registration'),
     url(r'^register',views.register,name='register'),
     url(r'^test',views.test,name='test'),
-    url(r'^abcd',views.abcd,name='abcd')
+    url(r'^abcd',views.abcd,name='abcd'),
+    url(r'^sendmessage',views.sendmessage,name='sendmessage')
 ]
