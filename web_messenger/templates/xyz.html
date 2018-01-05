@@ -751,8 +751,8 @@ body {
             </div>
           </div>
           <div class="col-sm-8 col-xs-7 heading-name" id="name_head">
-            <a class="heading-name-meta" >xyz
-            </a>
+            <label id="name_chat" >xyz
+            </label>
             <span class="heading-online">Online</span>
           </div>
           <div class="col-sm-1 col-xs-1  heading-dot pull-right">
@@ -878,6 +878,7 @@ $.ajaxSetup({
   function divFunction1(name){
       $.post("/web_messenger/abcd",{id:name}).done(function(data){
             document.getElementById("html1").innerHTML=data
+            document.getElementById("name_chat").innerHTML=name
       })
 }
 </script>
