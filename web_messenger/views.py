@@ -49,7 +49,12 @@ def register(request):
     return HttpResponseRedirect(reverse('login'))
 
 def test(request):
-    r=requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': 'abc@xyz.com'})
+
+
+    a=request.GET.get("id")
+    if a is not None:
+        return HttpResponse(a)
+    r=requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': 'def@xyz.com'})
     bhindi=json.loads(r.text)
     request.session["user"]="abc@xyz.com"
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': 'abc@xyz.com'})
@@ -58,6 +63,15 @@ def test(request):
 
 
     #return HttpResponse(r.json())
+def abcd(request):
+    a=request.POST.get("id")
+    #return HttpResponse(a)
+    r=requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': a})
+    bhindi=json.loads(r.text)
+    request.session["user"]="abc@xyz.com"
+    r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': 'abc@xyz.com'})
+    r2= requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
+    return HttpResponse(render(request,'xyz.html',{'my_dict':r.json,'my_dict2':r1.json(),'user_list':r2.json()}))
 
 
 # Cre3ate    your views here.
