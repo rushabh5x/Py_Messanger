@@ -59,7 +59,7 @@ def test(request):
     request.session["user"]="abc@xyz.com"
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': 'abc@xyz.com'})
     r2= requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
-    return render(request,'xyz.html',{'my_dict':r.json,'my_dict2':r1.json(),'user_list':r2.json()})
+    return render(request,'xyz.html',{'my_dict':r.json,'uniq_user':r1.json(),'user_list':r2.json()})
 
 
     #return HttpResponse(r.json())
@@ -71,7 +71,7 @@ def abcd(request):
     request.session["user"]="abc@xyz.com"
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': 'abc@xyz.com'})
     r2= requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
-    return HttpResponse(render(request,'xyz.html',{'my_dict':r.json,'my_dict2':r1.json(),'user_list':r2.json()}))
+    return HttpResponse(render(request,'xyz.html',{'my_dict':r.json,'uniq_user':r1.json(),'user_list':r2.json()}))
 
 
 # Cre3ate    your views here.
