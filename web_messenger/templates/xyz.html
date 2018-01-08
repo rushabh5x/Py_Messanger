@@ -761,7 +761,6 @@ body {
           </div>
         </div>
         <!-- Heading End -->
-
         <!-- Message Box -->
         <div class="row message" id="conversation">
 
@@ -908,6 +907,20 @@ function demo3()
   var elem=document.getElementById("conversation");
   elem.style.visibility = "hidden";
 }
+
+function auto_refresh()
+{
+  var name='def@xyz.com';
+  $.post("/web_messenger/autorefresh",{id:name}).done(function(data){
+            document.getElementById("conversation").innerHTML=data
+            document.getElementById("name_chat").innerHTML=name
+      });
+      document.getElementById("status").innerHTML=1;
+}
+
+setTimeout(auto_refresh
+,1000);
+
 </script>
 <script type="text/javascript">
 // using jQuery
