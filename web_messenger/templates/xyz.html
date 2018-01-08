@@ -640,8 +640,8 @@ body {
           <div class="row searchBox">
             <div class="col-sm-12 searchBox-inner">
               <div class="form-group has-feedback">
-                <input id="searchText" type="text" class="form-control" name="searchText" placeholder="Search" >
-                <button name="search"></button>
+                <input id="searchText" type="text" class="form-control" name="searchText" placeholder="Search" onkeyup="demo()">
+
                 <span class="glyphicon glyphicon-search form-control-feedback"></span>
               </div>
             </div>
@@ -652,7 +652,7 @@ body {
           <!-- sideBar -->
 
           <div class="row sideBar">
-            {% for y in my_dict2 %}
+            {% for y in uniq_user %}
             <div class="row sideBar-body"  onClick="divFunction1('{{y}}')">
               <div class="col-sm-3 col-xs-3 sideBar-avatar">
                 <div class="avatar-icon">
@@ -700,7 +700,7 @@ body {
             <div class="col-sm-12 composeBox-inner">
               <div class="form-group has-feedback">
 
-                <input id="composeText" type="text" class="form-control" name="searchText" placeholder="Search People" size="35">
+                <input id="composeText" type="text" class="form-control" name="searchText" placeholder="Search People" onkeyup="demo1()">
 
 
               </div>
@@ -709,11 +709,11 @@ body {
           <!-- ComposeBox End -->
 
           <!-- sideBar -->
-          <div class="row compose-sideBar">
+          <div class="row compose-sideBar" id="copose-sidebar" >
 
 
-            {% for z in user_list %}
-            <div class="row sideBar-body">
+
+            <div class="row sideBar-body" id="sideBar-body1" hidden="hidden">
               <div class="col-sm-3 col-xs-3 sideBar-avatar">
                 <div class="avatar-icon">
                   <img src="http://shurl.esy.es/y">
@@ -722,8 +722,9 @@ body {
               <div class="col-sm-9 col-xs-9 sideBar-main">
                 <div class="row">
                   <div class="col-sm-8 col-xs-8 sideBar-name">
-                    <span class="name-meta">{{z}}
-                  </span>
+                    <label id="new_people" >xyz
+            </label>
+
                   </div>
                   <div class="col-sm-4 col-xs-4 pull-right sideBar-time">
                     <span class="time-meta pull-right">18:18
@@ -732,7 +733,7 @@ body {
                 </div>
               </div>
             </div>
-            {% endfor %}
+
           </div>
         </div>
         <!-- Sidebar End -->
@@ -763,6 +764,7 @@ body {
 
         <!-- Message Box -->
         <div class="row message" id="conversation">
+
           <div class="row message-previous">
             <div class="col-sm-12 previous">
               <a onclick="previous(this)" id="ankitjain28" name="20">
@@ -817,7 +819,7 @@ body {
           <div class="col-sm-1 col-xs-1 reply-recording">
             <i class="fa fa-microphone fa-2x" aria-hidden="true"></i>
           </div>
-          <div class="col-sm-1 col-xs-1 reply-send" onClick="sendMessage()">
+          <div class="col-sm-1 col-xs-1 reply-send">
             <i class="fa fa-send fa-2x" aria-hidden="true"></i>
           </div>
         </div>
@@ -830,9 +832,8 @@ body {
 
   <!-- App End -->
 </body>
+  <script type="text/javascript">
 
-
-<script type="text/javascript">
 
 
 function my_fun1()
@@ -843,6 +844,48 @@ function my_fun2(size)
 {
   document.getElementById("side-two1").style.left=size
 }
+
+function divFunction1(name){
+      $.post("/web_messenger/abcd",{id:name}).done(function(data){
+            document.getElementById("html1").innerHTML=data
+            document.getElementById("name_chat").innerHTML=name
+      })
+}
+function demo()
+{
+var x=document.getElementById("searchText");
+    x.value=x.value.toUpperCase();
+
+
+
+
+}
+
+function demo1()
+{
+var x=document.getElementById("composeText");
+    
+    elem=document.getElementById("sideBar-body1");
+    elem.style.display = 'none';
+    var data={{ user_list | safe }};
+    for(var v in data)
+    {
+      if(x.value == data[v])
+      {
+        document.getElementById("new_people").innerHTML=x.value;
+        document.getElementById("new_people").value=x.value;
+        elem.style.display = 'block';
+
+      }
+   }
+
+
+}
+
+
+
+</script>
+<script type="text/javascript">
 // using jQuery
 function getCookie(name) {
     var cookieValue = null;
@@ -871,25 +914,7 @@ $.ajaxSetup({
         }
     }
 });
-  function divFunction1(name){
-      $.post("/web_messenger/abcd",{id:name}).done(function(data){
-            document.getElementById("html1").innerHTML=data
-            document.getElementById("name_chat").innerHTML=name
-      })
-  }
-  function sendMessage(){
-      document.getElementById("comment").value=""
-      $.post("/web_messanger/sendmessage",{sender:'abc@xyz.com',receiver:'def@xyz.com',text:'hi'}).done(function(data){
-            document.getElementById("html1").innerHTML=data
-            document.getElementById("name_chat").innerHTML='def@xyz.com'
-      })
-  }
-  function clearText(){
-      document.getElementById("comment").value=""
-  }
-  setTimeout(function(){
-   window.location.reload(1);
-    }, 5000);
+
 
 </script>
 
