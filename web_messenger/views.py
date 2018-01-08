@@ -90,7 +90,7 @@ def sendmessage(request):
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': 'abc@xyz.com'})
     r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
     return HttpResponse(
-        render(request, 'xyz.html', {'my_dict': r.json, 'uniq_user': r1.json(), 'user_list': r2.json()}))
+        render(request, 'refresh.html', {'my_dict': r.json, }))
 
 
 def autorefresh(request):

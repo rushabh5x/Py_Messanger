@@ -752,7 +752,7 @@ body {
             </div>
           </div>
           <div class="col-sm-8 col-xs-7 heading-name" id="name_head">
-            <label id="name_chat" >xyz
+            <label id="name_chat" >
             </label>
             <span class="heading-online">Online</span>
           </div>
@@ -780,7 +780,7 @@ body {
                   {{x.Message}}
                 </div>
                 <span class="message-time pull-right">
-                  Sun
+                  {{x.Creation_time}}
                 </span>
               </div>
             </div>
@@ -793,7 +793,7 @@ body {
                  {{x.Message}}
                 </div>
                 <span class="message-time pull-right">
-                  Sun
+                  {{x.Creation_time}}
                 </span>
               </div>
             </div>
@@ -871,7 +871,7 @@ function send()
   var name=document.getElementById("name_chat").innerHTML;
   $.post("/web_messenger/sendmessage",{id:name,sender:'abc@xyz.com',receiver:document.getElementById("name_chat").innerHTML,msg:document.getElementById("comment").value
         }).done(function(data){
-            document.getElementById("html1").innerHTML=data
+            document.getElementById("conversation").innerHTML=data
             document.getElementById("name_chat").innerHTML=name
             document.getElementById("rightside").style.display='block'
       })
@@ -924,12 +924,15 @@ function auto_refresh()
 setInterval(function ()
 {
   var name=document.getElementById("name_chat").innerHTML;
+  document.getElementById("status").innerHTML=name;
+  if(name != '')
+  {
   $.post("/web_messenger/autorefresh",{id:name}).done(function(data){
             document.getElementById("conversation").innerHTML=data
             document.getElementById("name_chat").innerHTML=name
-             document.getElementById("rightside").style.display='block'
+
       });
-      document.getElementById("status").innerHTML=1;
+      }
 }
 ,1000);
 
