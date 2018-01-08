@@ -6,6 +6,8 @@ from django.template import loader
 from django.contrib import messages
 import requests
 import simplejson as json
+import threading
+
 
 
 def index(request):
@@ -50,16 +52,17 @@ def register(request):
 
 def test(request):
 
-
-    a=request.GET.get("id")
-    if a is not None:
-        return HttpResponse(a)
-    r=requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': 'def@xyz.com'})
+    a='def@xyz.com'
+    if request.method == 'POST':
+        a = request.POST.get("id")
+    #if a is not None:
+     #   return HttpResponse(a)
+    r=requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': a})
     bhindi=json.loads(r.text)
     request.session["user"]="abc@xyz.com"
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': 'abc@xyz.com'})
     r2= requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
-    return render(request,'xyz.html',{'my_dict':r.json(),'my_dict2':r1.json(),'user_list':r2.json()})
+    return render(request,'xyz.html',{'my_dict':r.json,'uniq_user':r1.json(),'user_list':r2.json()})
 
 
     #return HttpResponse(r.json())
@@ -71,15 +74,20 @@ def abcd(request):
     request.session["user"]="abc@xyz.com"
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': 'abc@xyz.com'})
     r2= requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
-    return HttpResponse(render(request,'xyz.html',{'my_dict':r.json,'my_dict2':r1.json(),'user_list':r2.json()}))
+    return HttpResponse(render(request,'xyz.html',{'my_dict':r.json,'uniq_user':r1.json(),'user_list':r2.json()}))
 
-def sendmessage(request):
-    sender=request.POST.get("sender")
-    receiver=request.POST.get("receiver")
-    text=request.POST.get("text")
-    r=requests.get('http://localhost/messenger/3.php',params={'type':'sendmessage','sender':'abc@xyz.com','receiver':'def@xyz.com','data':'hi'})
-    r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': receiver})
-    r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': sender})
-    r3 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
-    return HttpResponse(render(request, 'xyz.html', {'my_dict': r1.json, 'my_dict2': r2.json(), 'user_list': r3.json()}))
+
 # Cre3ate    your views here.
+def sendmessage(request):
+    a = request.POST.get("id")
+    send = request.POST.get("sender")
+    receive=request.POST.get("receiver")
+    message=request.POST.get("msg")
+    r3=requests.get('http://localhost/messenger/3.php', params={'type': 'sendmessage', 'sender': send,'receiver':receive,'data':message})
+    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': a})
+    bhindi = json.loads(r.text)
+    request.session["user"] = "abc@xyz.com"
+    r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': 'abc@xyz.com'})
+    r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
+    return HttpResponse(
+        render(request, 'xyz.html', {'my_dict': r.json, 'uniq_user': r1.json(), 'user_list': r2.json()}))
