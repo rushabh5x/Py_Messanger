@@ -918,7 +918,15 @@ function auto_refresh()
       document.getElementById("status").innerHTML=1;
 }
 
-setTimeout(auto_refresh
+setInterval(function ()
+{
+  var name=document.getElementById("name_chat").innerHTML;
+  $.post("/web_messenger/autorefresh",{id:name}).done(function(data){
+            document.getElementById("conversation").innerHTML=data
+            document.getElementById("name_chat").innerHTML=name
+      });
+      document.getElementById("status").innerHTML=1;
+}
 ,1000);
 
 </script>
