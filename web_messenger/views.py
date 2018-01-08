@@ -95,6 +95,6 @@ def sendmessage(request):
 
 def autorefresh(request):
     a = request.POST.get("id")
-    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': 'def@xyz.com'})
+    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': a})
     return HttpResponse(
         render(request, 'refresh.html', {'my_dict': r.json}))
