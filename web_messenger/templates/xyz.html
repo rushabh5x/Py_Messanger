@@ -743,7 +743,7 @@ body {
       <!-- New Message Sidebar End -->
 
       <!-- Conversation Start -->
-      <div class="col-sm-8 conversation" >
+      <div class="col-sm-8 conversation" id="rightside" hidden="hidden">
         <!-- Heading -->
         <div class="row heading">
           <div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
@@ -856,6 +856,7 @@ function divFunction1(name){
       $.post("/web_messenger/test",{id:name}).done(function(data){
             document.getElementById("html1").innerHTML=data
             document.getElementById("name_chat").innerHTML=name
+            document.getElementById("rightside").style.display='block'
       })
 
 }
@@ -872,6 +873,7 @@ function send()
         }).done(function(data){
             document.getElementById("html1").innerHTML=data
             document.getElementById("name_chat").innerHTML=name
+            document.getElementById("rightside").style.display='block'
       })
 }
 
@@ -918,12 +920,14 @@ function auto_refresh()
       document.getElementById("status").innerHTML=1;
 }
 
+
 setInterval(function ()
 {
   var name=document.getElementById("name_chat").innerHTML;
   $.post("/web_messenger/autorefresh",{id:name}).done(function(data){
             document.getElementById("conversation").innerHTML=data
             document.getElementById("name_chat").innerHTML=name
+             document.getElementById("rightside").style.display='block'
       });
       document.getElementById("status").innerHTML=1;
 }
