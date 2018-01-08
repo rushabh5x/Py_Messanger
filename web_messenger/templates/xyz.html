@@ -763,7 +763,6 @@ body {
 
         <!-- Message Box -->
         <div class="row message" id="conversation">
-
           <div class="row message-previous">
             <div class="col-sm-12 previous">
               <a onclick="previous(this)" id="ankitjain28" name="20">
@@ -888,6 +887,10 @@ $.ajaxSetup({
   function clearText(){
       document.getElementById("comment").value=""
   }
+  setTimeout(function(){
+   window.location.reload(1);
+    }, 5000);
+
 </script>
 
 
