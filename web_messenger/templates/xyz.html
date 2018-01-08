@@ -652,8 +652,8 @@ body {
           <!-- sideBar -->
 
           <div class="row sideBar">
-            {% for y in uniq_user %}
-            <div class="row sideBar-body"  onClick="divFunction1('{{y}}')">
+            {% for value in uniq_user %}
+            <div class="row sideBar-body"  onClick="divFunction1('{{value}}')">
               <div class="col-sm-3 col-xs-3 sideBar-avatar">
                 <div class="avatar-icon">
                   <img src="http://shurl.esy.es/y">
@@ -662,8 +662,8 @@ body {
               <div class="col-sm-9 col-xs-9 sideBar-main">
                 <div class="row">
                   <div class="col-sm-8 col-xs-8 sideBar-name">
-                    <span class="name-meta">{{y}}
-                      <label hidden="hidden" id="msg1">{{y}}</label>
+                    <span class="name-meta">{{value}}
+                      <label hidden="hidden" id="msg1">{{value}}</label>
                   </span>
                   </div>
 
@@ -721,7 +721,7 @@ body {
               </div>
               <div class="col-sm-9 col-xs-9 sideBar-main">
                 <div class="row">
-                  <div class="col-sm-8 col-xs-8 sideBar-name">
+                  <div class="col-sm-8 col-xs-8 sideBar-name" onclick="demo3()">
                     <label id="new_people" >xyz
             </label>
 
@@ -774,7 +774,7 @@ body {
           </div>
           {% for x in my_dict %}
             {% if x.Sender == request.session.user %}
-                <div class="row message-body">
+          <div class="row message-body" id="messgae-body" >
             <div class="col-sm-12 message-main-sender">
               <div class="sender">
                 <div class="message-text">
@@ -786,11 +786,11 @@ body {
               </div>
             </div>
           </div>
-          {% else %}
-          <div class="row message-body">
-            <div class="col-sm-12 message-main-receiver">
-              <div class="receiver">
-                <div class="message-text">
+            {% else %}
+            <div class="row message-body">
+              <div class="col-sm-12 message-main-receiver">
+                <div class="receiver">
+                  <div class="message-text">
                  {{x.Message}}
                 </div>
                 <span class="message-time pull-right">
@@ -819,7 +819,7 @@ body {
           <div class="col-sm-1 col-xs-1 reply-recording">
             <i class="fa fa-microphone fa-2x" aria-hidden="true"></i>
           </div>
-          <div class="col-sm-1 col-xs-1 reply-send">
+          <div class="col-sm-1 col-xs-1 reply-send" onclick="send()" id="send">
             <i class="fa fa-send fa-2x" aria-hidden="true"></i>
           </div>
         </div>
@@ -839,38 +839,56 @@ body {
 function my_fun1()
 {
   document.getElementById("side-two1").style.left=0
+  elem=document.getElementById("sideBar-body1");
+    elem.style.display = 'none';
+    var x=document.getElementById("composeText");
+    x.value="";
 }
 function my_fun2(size)
 {
   document.getElementById("side-two1").style.left=size
+  elem=document.getElementById("sideBar-body1");
+    elem.style.display = 'none';
+    var x=document.getElementById("composeText");
+    x.value="";
 }
 
 function divFunction1(name){
-      $.post("/web_messenger/abcd",{id:name}).done(function(data){
+      $.post("/web_messenger/test",{id:name}).done(function(data){
             document.getElementById("html1").innerHTML=data
             document.getElementById("name_chat").innerHTML=name
       })
+
 }
 function demo()
 {
 var x=document.getElementById("searchText");
     x.value=x.value.toUpperCase();
-
-
-
-
 }
+
+function send()
+{
+  var name=document.getElementById("name_chat").innerHTML;
+  $.post("/web_messenger/sendmessage",{id:name,sender:'abc@xyz.com',receiver:document.getElementById("name_chat").innerHTML,msg:document.getElementById("comment").value
+        }).done(function(data){
+            document.getElementById("html1").innerHTML=data
+            document.getElementById("name_chat").innerHTML=name
+      })
+}
+
+
 
 function demo1()
 {
 var x=document.getElementById("composeText");
-    
+
     elem=document.getElementById("sideBar-body1");
     elem.style.display = 'none';
     var data={{ user_list | safe }};
+    var data2={{ uniq_user | safe }}
     for(var v in data)
     {
-      if(x.value == data[v])
+      if((x.value == data[v]) && !(data2.indexOf(x.value)> -1))
       {
         document.getElementById("new_people").innerHTML=x.value;
         document.getElementById("new_people").value=x.value;
@@ -883,7 +901,13 @@ var x=document.getElementById("composeText");
 }
 
 
-
+function demo3()
+{
+  document.getElementById("name_chat").innerHTML=document.getElementById("new_people").innerHTML;
+  document.getElementById("status").innerHTML=document.getElementById("new_people").innerHTML;
+  var elem=document.getElementById("conversation");
+  elem.style.visibility = "hidden";
+}
 </script>
 <script type="text/javascript">
 // using jQuery
