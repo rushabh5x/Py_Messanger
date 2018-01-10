@@ -68,12 +68,11 @@ def test(request):
 
     if request.method == 'POST':
         a = request.POST.get("id")
-    
+
     #if a is not None:
-     #   return HttpResponse(a)
+
     r=requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': a , 'email1':b})
     bhindi=json.loads(r.text)
-    request.session["user"]="abc@xyz.com"
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
     r2= requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
     return render(request,'xyz.html',{'my_dict':r.json,'uniq_user':r1.json(),'user_list':r2.json()})
@@ -93,19 +92,18 @@ def abcd(request):
 
 # Cre3ate    your views here.
 def sendmessage(request):
-    a = request.POST.get("id")
-    send = request.POST.get("sender")
+
+
     receive=request.POST.get("receiver")
     message=request.POST.get("msg")
     b = request.session["user"]
-    r3=requests.get('http://localhost/messenger/3.php', params={'type': 'sendmessage', 'sender': send,'receiver':receive,'data':message})
-    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': a , 'email1': b})
+    r3=requests.get('http://localhost/messenger/3.php', params={'type': 'sendmessage', 'sender': b,'receiver':receive,'data':message})
+    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': receive, 'email1': b})
     bhindi = json.loads(r.text)
-    request.session["user"] = "abc@xyz.com"
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
     r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
     return HttpResponse(
-        render(request, 'refresh.html', {'my_dict': r.json, }))
+        render(request, 'refresh.html', {'my_dict': r.json() }))
 
 
 def autorefresh(request):
@@ -113,4 +111,4 @@ def autorefresh(request):
     b = request.session["user"]
     r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': a , 'email1': b})
     return HttpResponse(
-        render(request, 'refresh.html', {'my_dict': r.json}))
+        render(request, 'refresh.html', {'my_dict': r.json()}))
