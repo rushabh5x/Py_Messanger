@@ -89,21 +89,39 @@ def abcd(request):
     r2= requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
     return HttpResponse(render(request,'xyz.html',{'my_dict':r.json,'uniq_user':r1.json(),'user_list':r2.json()}))
 
+def logout(request):
+    request.session["user"]="";
+    messages.info(request, 'You are sucessfully logged out')
+
+    return HttpResponseRedirect(reverse('login'))
 
 # Cre3ate    your views here.
 def sendmessage(request):
 
 
-    receive=request.POST.get("receiver")
-    message=request.POST.get("msg")
+   # receive=request.POST.get("receiver")
+   # message=request.POST.get("msg")
+   # b = request.session["user"]
+    #r3=requests.get('http://localhost/messenger/3.php', params={'type': 'sendmessage', 'sender': b,'receiver':receive,'data':message})
+    #r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': receive, 'email1': b})
+    #bhindi = json.loads(r.text)
+    #r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
+    #r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
+    #return HttpResponse(
+     #   render(request, 'refresh.html', {'my_dict': r.json() }))
+
+
+    receive = request.POST.get("receiver")
+    message = request.POST.get("msg")
     b = request.session["user"]
-    r3=requests.get('http://localhost/messenger/3.php', params={'type': 'sendmessage', 'sender': b,'receiver':receive,'data':message})
-    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': receive, 'email1': b})
+    r3 = requests.get('http://localhost/messenger/3.php',
+                      params={'type': 'sendmessage', 'sender': b, 'receiver': receive, 'data': message})
+    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': receive, 'email1':b})
     bhindi = json.loads(r.text)
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
     r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
     return HttpResponse(
-        render(request, 'refresh.html', {'my_dict': r.json() }))
+        render(request, 'xyz.html', {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json()}))
 
 
 def autorefresh(request):

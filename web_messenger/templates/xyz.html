@@ -870,9 +870,9 @@ function send()
 {
   var name=document.getElementById("name_chat").innerHTML;
 
-  $.post("/web_messenger/sendmessage",{receiver:document.getElementById("name_chat").innerHTML,msg:document.getElementById("comment").value
+  $.post("/web_messenger/sendmessage",{id:name,receiver:document.getElementById("name_chat").innerHTML,msg:document.getElementById("comment").value
         }).done(function(data){
-            document.getElementById("conversation").innerHTML=data
+            document.getElementById("html1").innerHTML=data
             document.getElementById("name_chat").innerHTML=name
             document.getElementById("rightside").style.display='block'
             document.getElementById("comment").value=""
@@ -910,6 +910,7 @@ function demo3()
   document.getElementById("status").innerHTML=document.getElementById("new_people").innerHTML;
   var elem=document.getElementById("conversation");
   elem.style.visibility = "hidden";
+  document.getElementById("rightside").style.display='block'
 }
 
 
