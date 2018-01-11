@@ -17,13 +17,13 @@
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
     display: none;
-    position: absolute;
-    
+    position: fixed;
 
     background-color: #f9f9f9;
-    min-width: 160px;
+    max-width: fit-content;
+    max-height: fit-content;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 1001;
 }
 
 /* Links inside the dropdown */
@@ -674,10 +674,10 @@ body {
             <div class="col-sm-1 col-xs-1  heading-dot  pull-right dropdown">
               <i class="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true"></i>
               <div class="dropdown-content">
-    <a href="#">Link 1</a>
-    <a href="#">Link 2</a>
-    <a href="#">Link 3</a>
-  </div>
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+              </div>
             </div>
             <div class="col-sm-2 col-xs-2 heading-compose  pull-right" onclick="my_fun1()" id="heading-compose">
               <i class="fa fa-comments fa-2x  pull-right" aria-hidden="true"></i>
