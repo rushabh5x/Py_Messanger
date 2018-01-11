@@ -7,6 +7,50 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
+
+
+    .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    
+
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+
+
+
+
         html,
 body,
 div,
@@ -627,8 +671,13 @@ body {
                 <img src="http://shurl.esy.es/y">
               </div>
             </div>
-            <div class="col-sm-1 col-xs-1  heading-dot  pull-right">
+            <div class="col-sm-1 col-xs-1  heading-dot  pull-right dropdown">
               <i class="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true"></i>
+              <div class="dropdown-content">
+    <a href="#">Link 1</a>
+    <a href="#">Link 2</a>
+    <a href="#">Link 3</a>
+  </div>
             </div>
             <div class="col-sm-2 col-xs-2 heading-compose  pull-right" onclick="my_fun1()" id="heading-compose">
               <i class="fa fa-comments fa-2x  pull-right" aria-hidden="true"></i>
