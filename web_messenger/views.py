@@ -123,6 +123,22 @@ def sendmessage(request):
     return HttpResponse(
         render(request, 'xyz.html', {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json()}))
 
+def delete(request):
+    receive = request.session["user"]
+    send=request.POST.get("id")
+    r3= requests.get('http://localhost/messenger/3.php', params={'type': 'deleteallmessage', 'email': send, 'email1': receive})
+
+    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': receive, 'email1': send})
+    bhindi = json.loads(r.text)
+    r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': receive})
+    r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
+    return HttpResponse(
+        render(request, 'xyz.html', {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json()}))
+
+
+
+
+
 
 def autorefresh(request):
     a = request.POST.get("id")

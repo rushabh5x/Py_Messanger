@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^abcd',views.abcd,name='abcd'),
     url(r'^sendmessage',views.sendmessage,name='sendmessgae'),
     url(r'^autorefresh',views.autorefresh,name='autorefresh'),
-    url(r'^logout',views.logout,name='logout')
+    url(r'^logout',views.logout,name='logout'),
+    url(r'^delete',views.delete,name='delete')
 ]
