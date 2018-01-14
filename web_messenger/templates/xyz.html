@@ -692,6 +692,9 @@ body {
 
 <body >
 {% csrf_token %}
+{% for i in uniq_user %}
+{{i}}
+{% endfor %}
 <label id="status">how r u???</label>
 <a href="/web_messenger/logout">logout</a>
   <div class="container app">
@@ -983,6 +986,7 @@ function send()
             document.getElementById("rightside").style.display='block';
             document.getElementById("comment").value="";
       })
+
 }
 
 
