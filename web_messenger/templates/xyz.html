@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en" id="html1">
 <head>
     <meta charset="utf-8">
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
     <title>Chat Screen Module</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <style type="text/css">
 
     .label {
@@ -670,8 +671,8 @@ body {
   }
 }
     </style>
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="{% static 'scripts/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'scripts/bootstrap.min.js' %}"></script>
 </head>
 <body id="body1">
 <!DOCTYPE html>
@@ -681,12 +682,12 @@ body {
   <title>Whatsapp Template</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
   <!-- Font Awesome File -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+  <script src="{% static 'scripts/jquery.min.js' %}"></script>
+  <script src="{% static 'scripts/bootstrap1.min.js' %}"></script>
 
 </head>
 
@@ -981,6 +982,7 @@ function send()
 
   $.post("/web_messenger/sendmessage",{id:name,receiver:document.getElementById("name_chat").innerHTML,msg:document.getElementById("comment").value
         }).done(function(data){
+
             document.getElementById("html1").innerHTML=data;
             document.getElementById("name_chat").innerHTML=name;
             document.getElementById("rightside").style.display='block';
