@@ -987,7 +987,8 @@ function send()
             document.getElementById("name_chat").innerHTML=name;
             document.getElementById("rightside").style.display='block';
             document.getElementById("comment").value="";
-      })
+
+      });
 
 }
 
@@ -1003,11 +1004,12 @@ var x=document.getElementById("composeText");
     var data2={{ uniq_user | safe }};
     for(var v in data)
     {
-      if((x.value == data[v]) && !(data2.indexOf(x.value)> -1))
+      if((x.value == data[v]))
       {
         document.getElementById("new_people").innerHTML=x.value;
         document.getElementById("new_people").value=x.value;
         elem.style.display = 'block';
+        document.getElementById("rightside").style.display='block';
 
       }
    }
@@ -1040,7 +1042,9 @@ setInterval(function ()
 
       });
       }
+
 }
+
 ,1000);
 
 </script>
