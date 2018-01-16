@@ -1073,8 +1073,10 @@ function delete_msg(id1)
    $.post("/web_messenger/deletesingle",{id:id1,name:name1}).done(function(data){
           document.getElementById("html1").innerHTML=data;
             document.getElementById("name_chat").innerHTML=name;
-            document.getElementById("rightside").style.display='block';
-            document.getElementById("comment").value="";
+            if(name != "")
+            {
+              document.getElementById("rightside").style.display='block';
+            document.getElementById("comment").value="";}
       });
 
 }
