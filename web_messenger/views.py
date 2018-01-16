@@ -135,6 +135,21 @@ def delete(request):
     return HttpResponse(
         render(request, 'xyz.html', {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json()}))
 
+def deletesingle(request):
+    id = request.POST.get("id")
+    receive = request.POST.get("name")
+    b = request.session["user"]
+
+    r3 = requests.get('http://localhost/messenger/3.php',
+                      params={'type': 'deletemessage', 'id': id})
+    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': receive, 'email1': b})
+
+    bhindi = json.loads(r.text)
+    r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
+    r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
+    return HttpResponse(
+        render(request, 'xyz.html', {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json()}))
+
 
 
 

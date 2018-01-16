@@ -1065,9 +1065,18 @@ function onFileSelected(event) {
   reader.readAsDataURL(selectedFile);
 }
 
-function delete_msg(id)
+function delete_msg(id1)
 {
-  document.getElementById("status").innerHTML=id;
+
+  document.getElementById("status").innerHTML=id1;
+  var name1=document.getElementById("name_chat").innerHTML;
+   $.post("/web_messenger/deletesingle",{id:id1,name:name1}).done(function(data){
+          document.getElementById("html1").innerHTML=data;
+            document.getElementById("name_chat").innerHTML=name;
+            document.getElementById("rightside").style.display='block';
+            document.getElementById("comment").value="";
+      });
+
 }
 
 setInterval(function ()
