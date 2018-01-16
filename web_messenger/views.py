@@ -143,7 +143,10 @@ def deletesingle(request):
     r3 = requests.get('http://localhost/messenger/3.php',
                       params={'type': 'deletemessage', 'id': id})
     r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': receive, 'email1': b})
-
+    if(r.text == ""):
+        request.session['nomessage']=1;
+    else:
+        request.session['nomessage'] = 0;
     bhindi = json.loads(r.text)
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
     r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
@@ -161,3 +164,10 @@ def autorefresh(request):
     r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': a , 'email1': b})
     return HttpResponse(
         render(request, 'refresh.html', {'my_dict': r.json()}))
+
+
+def updateprofile(request):
+    b = request.session["user"]
+    pic= request.POST.get("pic")
+    r = requests.post('http://localhost/messenger/3.php', data={'type': 'profilechange', 'id': b, 'pic': pic})
+    return HttpResponse(r.text)

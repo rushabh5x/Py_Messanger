@@ -707,6 +707,7 @@ body {
 {{i}}
 {% endfor %}
 <label id="status">how r u???</label>
+<label id="message_check" >{{request.session.nomessage}}</label>
 <a href="/web_messenger/logout">logout</a>
   <div class="container app">
     <div class="row app-one">
@@ -1059,6 +1060,16 @@ function onFileSelected(event) {
 
   reader.onload = function(event) {
     imgtag.src = event.target.result;
+    $.post("/web_messenger/updateprofile",{pic:event.target.result
+        }).done(function(data){
+
+            document.getElementById("html1").innerHTML=data;
+            document.getElementById("name_chat").innerHTML=name;
+            document.getElementById("rightside").style.display='block';
+            document.getElementById("comment").value="";
+
+      });
+
     document.getElementById("status").innerHTML=event.target.result;
   };
 
@@ -1073,10 +1084,8 @@ function delete_msg(id1)
    $.post("/web_messenger/deletesingle",{id:id1,name:name1}).done(function(data){
           document.getElementById("html1").innerHTML=data;
             document.getElementById("name_chat").innerHTML=name;
-            if(name != "")
-            {
               document.getElementById("rightside").style.display='block';
-            document.getElementById("comment").value="";}
+            document.getElementById("comment").value="";
       });
 
 }

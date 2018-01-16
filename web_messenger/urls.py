@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^autorefresh',views.autorefresh,name='autorefresh'),
     url(r'^logout',views.logout,name='logout'),
     url(r'^deletesingle',views.deletesingle,name='deletesingle'),
-    url(r'^delete',views.delete,name='delete')
+    url(r'^delete',views.delete,name='delete'),
+    url(r'^updateprofile',views.updateprofile,name='updateprofile')
 
 ]
