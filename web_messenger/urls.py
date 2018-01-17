@@ -15,6 +15,8 @@ urlpatterns = [
     url(r'^logout',views.logout,name='logout'),
     url(r'^deletesingle',views.deletesingle,name='deletesingle'),
     url(r'^delete',views.delete,name='delete'),
-    url(r'^updateprofile',views.updateprofile,name='updateprofile')
+    url(r'^updateprofile',views.updateprofile,name='updateprofile'),
+    url(r'^random',views.random,name='random')
+
 
 ]

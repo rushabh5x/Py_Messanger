@@ -37,6 +37,7 @@ def validation(request):
 
         r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
         r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
+
         return render(request, 'xyz.html', { 'uniq_user': r1.json(), 'user_list': r2.json()})
 
     #excep
@@ -169,5 +170,13 @@ def autorefresh(request):
 def updateprofile(request):
     b = request.session["user"]
     pic= request.POST.get("pic")
+    #image1=request.FILES['upload']
     r = requests.post('http://localhost/messenger/3.php', data={'type': 'profilechange', 'id': b, 'pic': pic})
     return HttpResponse(r.text)
+
+
+def random(request):
+    return render(request,'img_upload.html')
+    a = request.POST.get("id")
+
+    return HttpResponse(render(request,'xyz.html'))

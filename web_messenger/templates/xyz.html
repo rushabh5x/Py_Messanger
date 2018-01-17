@@ -701,10 +701,10 @@ body {
 
 </head>
 
-<body >
+<body>
 {% csrf_token %}
 {% for i in uniq_user %}
-{{i}}
+{{i.profile}}
 {% endfor %}
 <label id="status">how r u???</label>
 <label id="message_check" >{{request.session.nomessage}}</label>
@@ -752,17 +752,17 @@ body {
 
           <div class="row sideBar">
             {% for value in uniq_user %}
-            <div class="row sideBar-body"  onClick="divFunction1('{{value}}')">
+            <div class="row sideBar-body"  onClick="divFunction1('{{value.user}}','{{value.profile}}')">
               <div class="col-sm-3 col-xs-3 sideBar-avatar">
                 <div class="avatar-icon">
-                  <img src="">
+                  <img src="/static/image/{{value.profile}}"  height="200" class="user" id="{{value.user}}">
                 </div>
               </div>
               <div class="col-sm-9 col-xs-9 sideBar-main">
                 <div class="row">
                   <div class="col-sm-8 col-xs-8 sideBar-name">
-                    <span class="name-meta">{{value}}
-                      <label hidden="hidden" id="msg1">{{value}}</label>
+                    <span class="name-meta">{{value.user}}
+                      <label hidden="hidden" id="msg1">{{value.user}}</label>
                   </span>
                   </div>
 
@@ -847,7 +847,7 @@ body {
         <div class="row heading">
           <div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
             <div class="heading-avatar-icon">
-              <img src="">
+              <img src="" id="profile_name_chat">
             </div>
           </div>
           <div class="col-sm-8 col-xs-7 heading-name" id="name_head">
@@ -983,11 +983,16 @@ function my_fun2(size)
     x.value="";
 }
 
-function divFunction1(name){
+function divFunction1(name,profile){
+
       $.post("/web_messenger/test",{id:name}).done(function(data){
             document.getElementById("html1").innerHTML=data;
             document.getElementById("name_chat").innerHTML=name;
             document.getElementById("rightside").style.display='block';
+            var path='static/image/'+profile;
+
+            document.getElementById("profile_name_chat").src=document.getElementById(name).src;
+
 
 
       })
@@ -1034,7 +1039,6 @@ var x=document.getElementById("composeText");
         document.getElementById("new_people").value=x.value;
         elem.style.display = 'block';
 
-
       }
    }
 
@@ -1060,17 +1064,13 @@ function onFileSelected(event) {
 
   reader.onload = function(event) {
     imgtag.src = event.target.result;
-    $.post("/web_messenger/updateprofile",{pic:event.target.result
-        }).done(function(data){
+   $.post("/web_messenger/updateprofile",{pic:event.target.result}).done(function(data){
 
-            document.getElementById("html1").innerHTML=data;
-            document.getElementById("name_chat").innerHTML=name;
-            document.getElementById("rightside").style.display='block';
-            document.getElementById("comment").value="";
 
       });
 
-    document.getElementById("status").innerHTML=event.target.result;
+
+    document.getElementById("status").innerHTML=selectedFile.name;
   };
 
   reader.readAsDataURL(selectedFile);
@@ -1089,6 +1089,7 @@ function delete_msg(id1)
       });
 
 }
+
 
 setInterval(function ()
 {

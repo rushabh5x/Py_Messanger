@@ -27,6 +27,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+STATICFILES_DIRS = [
+
+    'C:/xampp/htdocs/ima'
+]
+STATIC_URL = '/static/'
 
 # Application definition
 
