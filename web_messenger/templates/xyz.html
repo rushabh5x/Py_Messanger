@@ -997,7 +997,7 @@ function divFunction1(name,profile){
             var path='static/image/'+profile;
 
             document.getElementById("profile_name_chat").src=document.getElementById(name).src;
-
+            alert(document.getElementById(name).src);
 
 
       })
@@ -1053,7 +1053,7 @@ var x=document.getElementById("composeText");
     var data2={{ uniq_user | safe }};
     for(var v in data)
     {
-    
+
       if((x.value == data[v].email_id))
       {
         document.getElementById("new_people").innerHTML=x.value;
