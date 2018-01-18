@@ -701,13 +701,14 @@ body {
 
 </head>
 
-<body>
+<body onload="foo()">
 {% csrf_token %}
 {% for i in uniq_user %}
 {{i.profile}}
 {% endfor %}
 <label id="status">how r u???</label>
 <label id="message_check" >{{request.session.nomessage}}</label>
+<label id="myname" hidden="hidden">{{request.session.user}}</label>
 <a href="/web_messenger/logout">logout</a>
   <div class="container app">
     <div class="row app-one">
@@ -718,7 +719,11 @@ body {
           <div class="row heading">
             <div class="col-sm-3 col-xs-3 heading-avatar">
               <div class="heading-avatar-icon">
-                <img id="myimage" height="200" class="user">
+                {% for v in user_list %}
+                {% if v.email_id == request.session.user %}
+                <img id="myimage" height="200" class="user" src="/static/image/{{v.Profile}}">
+                {% endif %}
+                {% endfor %}
               </div>
             </div>
             <input type="file" id="upload" name="upload" style="visibility: hidden; width: 1px; height: 1px" onchange="onFileSelected(event)"/>
@@ -815,7 +820,7 @@ body {
             <div class="row sideBar-body" id="sideBar-body1" hidden="hidden">
               <div class="col-sm-3 col-xs-3 sideBar-avatar">
                 <div class="avatar-icon">
-                  <img src="">
+                  <img src="" id="new_people_profile">
                 </div>
               </div>
               <div class="col-sm-9 col-xs-9 sideBar-main">
@@ -1015,6 +1020,21 @@ function send()
             document.getElementById("name_chat").innerHTML=name;
             document.getElementById("rightside").style.display='block';
             document.getElementById("comment").value="";
+            var data={{ user_list | safe }};
+            var myname=document.getElementById("myname").innerHTML;
+            for(var v in data)
+            {
+              if(name == data[v].email_id)
+              {
+                var path="http://127.0.0.1:8000/static/image/"+data[v].Profile;
+                document.getElementById("profile_name_chat").src=path;
+              }
+              else if(myname == data[v].email_id)
+              {
+                var path="http://127.0.0.1:8000/static/image/"+data[v].Profile;
+                document.getElementById("myimage").src=path;
+              }
+            }
 
       });
 
@@ -1038,6 +1058,8 @@ var x=document.getElementById("composeText");
         document.getElementById("new_people").innerHTML=x.value;
         document.getElementById("new_people").value=x.value;
         elem.style.display = 'block';
+        var path="http://127.0.0.1:8000/static/image/"+data[v].Profile;
+        document.getElementById("new_people_profile").src=path;
 
 
       }
@@ -1046,14 +1068,40 @@ var x=document.getElementById("composeText");
 
 }
 
+function foo()
+{
+  var data={{ user_list | safe }};
+  var myname=document.getElementById("myname").innerHTML;
+  for(var v in data)
+    {
+      if((myname == data[v].email_id))
+      {
+        var path="http://127.0.0.1:8000/static/image/"+data[v].Profile;
+        document.getElementById("myimage").src=path;
+
+      }
+    }
+}
+
 
 function demo3()
 {
+
   var name=document.getElementById("new_people").innerHTML;
+  var data={{ user_list | safe }};
+  for(var v in data)
+  {
+    if(name == data[v].email_id)
+    {
+      var path="http://127.0.0.1:8000/static/image/"+data[v].Profile;
+      document.getElementById("profile_name_chat").src=path;
+    }
+  }
   document.getElementById("name_chat").innerHTML=name;
   document.getElementById("status").innerHTML=document.getElementById("new_people").innerHTML;
   document.getElementById("rightside").style.display='block';
   document.getElementById("rightside").style.visiblity='visible';
+
 }
 
 function onFileSelected(event) {
