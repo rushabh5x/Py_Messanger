@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.template import loader
 from django.contrib import messages
+from django.conf import settings
 import requests
 import simplejson as json
 import threading
@@ -170,12 +171,15 @@ def autorefresh(request):
 def updateprofile(request):
     b = request.session["user"]
     pic= request.POST.get("pic")
+    location = settings.PRIVATE_STORAGE_ROOT
     #image1=request.FILES['upload']
-    r = requests.post('http://localhost/messenger/3.php', data={'type': 'profilechange', 'id': b, 'pic': pic})
+    r = requests.post('http://localhost/messenger/3.php', data={'type': 'profilechange', 'id': b, 'pic': pic , 'path':location})
     return HttpResponse(r.text)
 
 
 def random(request):
+    location=settings.PRIVATE_STORAGE_ROOT
+    return HttpResponse(location)
     return render(request,'img_upload.html')
     a = request.POST.get("id")
 

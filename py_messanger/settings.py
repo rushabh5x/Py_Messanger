@@ -32,7 +32,7 @@ STATICFILES_DIRS = [
     'C:/xampp/htdocs/ima'
 ]
 STATIC_URL = '/static/'
-
+PRIVATE_STORAGE_ROOT=os.path.join(BASE_DIR,'web_messenger\static\image')
 # Application definition
 
 INSTALLED_APPS = [
