@@ -42,14 +42,27 @@
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
-
-.dropdown-content1 {
+.dropdown-content2{
     display: none;
     position: fixed;
 
 
     background-color: #f9f9f9;
     max-width: 100px;
+    max-height:50px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+
+
+.dropdown-content1 {
+    display: none;
+    position: realative;
+
+
+    background-color: #f9f9f9;
+    max-width: 70px;
     max-height:50px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
@@ -72,6 +85,12 @@
     display: block;
 }
 
+.dropdown-content2 label {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #f1f1f1}
 
@@ -84,6 +103,9 @@
     display: block;
 }
 
+.dropdown:hover .dropdown-content2 {
+    display: block;
+}
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
@@ -741,7 +763,7 @@ body {
           <!-- Heading End -->
 
           <!-- SearchBox -->
-          <div class="row searchBox">
+        <!--  <div class="row searchBox">
             <div class="col-sm-12 searchBox-inner">
               <div class="form-group has-feedback">
                 <input id="searchText" type="text" class="form-control" name="searchText" placeholder="Search" onkeyup="demo()">
@@ -750,7 +772,7 @@ body {
               </div>
             </div>
 
-          </div>
+          </div>-->
 
           <!-- Search Box End -->
           <!-- sideBar -->
@@ -862,7 +884,7 @@ body {
           </div>
           <div class="col-sm-1 col-xs-1  heading-dot pull-right dropdown">
             <i class="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true"></i>
-            <div class="dropdown-content1">
+            <div class="dropdown-content2">
               <div >
               <label  onclick="delete_all()" ><span>Delete All</span></label>
               </div>
@@ -893,8 +915,8 @@ body {
                 <span class="message-time pull-right">
                   {{x.Creation_time}}
                 </span>
-                <div class="dropdown-content1">
-                <label  onclick="delete_msg('{{x.Id}}')" ><span>Delete</span></label>
+                <div class="dropdown-content1" onclick="delete_msg('{{x.Id}}')" >
+                <label   ><span>Delete</span></label>
 
               </div>
               </div>
@@ -928,15 +950,15 @@ body {
 
         <!-- Reply Box -->
         <div class="row reply">
-          <div class="col-sm-1 col-xs-1 reply-emojis">
+          <!--<div class="col-sm-1 col-xs-1 reply-emojis">
             <i class="fa fa-smile-o fa-2x"></i>
-          </div>
+          </div>-->
           <div class="col-sm-9 col-xs-9 reply-main" id="reply-main">
             <textarea class="form-control" rows="1" id="comment"></textarea>
           </div>
-          <div class="col-sm-1 col-xs-1 reply-recording">
+          <!--<div class="col-sm-1 col-xs-1 reply-recording">
             <i class="fa fa-microphone fa-2x" aria-hidden="true"></i>
-          </div>
+          </div>-->
           <div class="col-sm-1 col-xs-1 reply-send" onclick="send()" id="send">
             <i class="fa fa-send fa-2x" aria-hidden="true"></i>
           </div>
@@ -997,7 +1019,7 @@ function divFunction1(name,profile){
             var path='static/image/'+profile;
 
             document.getElementById("profile_name_chat").src=document.getElementById(name).src;
-            alert(document.getElementById(name).src);
+
 
 
       })
@@ -1133,9 +1155,29 @@ function delete_msg(id1)
   var name1=document.getElementById("name_chat").innerHTML;
    $.post("/web_messenger/deletesingle",{id:id1,name:name1}).done(function(data){
           document.getElementById("html1").innerHTML=data;
-            document.getElementById("name_chat").innerHTML=name;
+            document.getElementById("name_chat").innerHTML=name1;
               document.getElementById("rightside").style.display='block';
             document.getElementById("comment").value="";
+            var data={{ user_list | safe }};
+            var myname=document.getElementById("myname").innerHTML;
+            for(var v in data)
+            {
+              if(name1 == data[v].email_id)
+              {
+                var path="http://127.0.0.1:8000/static/image/"+data[v].Profile;
+                document.getElementById("profile_name_chat").src=path;
+              }
+              else if(myname == data[v].email_id)
+              {
+                var path="http://127.0.0.1:8000/static/image/"+data[v].Profile;
+                document.getElementById("myimage").src=path;
+              }
+            }
+            var msg={{ my_dict | safe }};
+            if (msg == "")
+            {
+               document.getElementById("rightside").style.display='none';
+            }
       });
 
 }

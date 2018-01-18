@@ -33,13 +33,13 @@ def validation(request):
         b = request.session["user"]
                             # if a is not None:
             #   return HttpResponse(a)
-        #r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': a, 'email1': b})
+        r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': a, 'email1': b})
 
 
         r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
         r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
 
-        return render(request, 'xyz.html', { 'uniq_user': r1.json(), 'user_list': r2.json()})
+        return render(request, 'xyz.html', { 'my_dict':r.json(),'uniq_user': r1.json(), 'user_list': r2.json()})
 
     #excep
 
