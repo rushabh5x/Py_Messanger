@@ -38,8 +38,12 @@ def validation(request):
 
         r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
         r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
+        if (not r.json()):
+            request.session["msg"] = '0';
+        else:
+            request.session["msg"] = '1';
 
-        return render(request, 'xyz.html', { 'my_dict':r.json(),'uniq_user': r1.json(), 'user_list': r2.json()})
+        return render(request, 'xyz.html', { 'my_dict':r.json(),'uniq_user': r1.json(), 'user_list': r2.json(), 'msg':'1'})
 
     #excep
 
@@ -77,7 +81,11 @@ def test(request):
     bhindi=json.loads(r.text)
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
     r2= requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
-    return render(request,'xyz.html',{'my_dict':r.json,'uniq_user':r1.json(),'user_list':r2.json()})
+    if (not r.json()):
+        request.session["msg"] = '0';
+    else:
+        request.session["msg"] = '1';
+    return render(request,'xyz.html',{'my_dict':r.json,'uniq_user':r1.json(),'user_list':r2.json(), 'msg':'1'})
 
 
     #return HttpResponse(r.json())
@@ -89,7 +97,7 @@ def abcd(request):
     request.session["user"]="abc@xyz.com"
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': 'abc@xyz.com'})
     r2= requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
-    return HttpResponse(render(request,'xyz.html',{'my_dict':r.json,'uniq_user':r1.json(),'user_list':r2.json()}))
+    return HttpResponse(render(request,'xyz.html',{'my_dict':r.json,'uniq_user':r1.json(),'user_list':r2.json(), 'msg':'1'}))
 
 def logout(request):
     request.session["user"]="";
@@ -122,8 +130,14 @@ def sendmessage(request):
     bhindi = json.loads(r.text)
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
     r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
+
+
+    if (not r.json()):
+        request.session["msg"] = '0';
+    else:
+        request.session["msg"] = '1';
     return HttpResponse(
-        render(request, 'xyz.html', {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json()}))
+        render(request, 'xyz.html', {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json(), 'msg':'1'}))
 
 def delete(request):
     receive = request.session["user"]
@@ -134,8 +148,12 @@ def delete(request):
     bhindi = json.loads(r.text)
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': receive})
     r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
+    if (not r.json()):
+        request.session["msg"] = '0';
+    else:
+        request.session["msg"] = '1';
     return HttpResponse(
-        render(request, 'xyz.html', {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json()}))
+        render(request, 'xyz.html', {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json(), 'msg':'1'}))
 
 def deletesingle(request):
     id = request.POST.get("id")
@@ -145,15 +163,24 @@ def deletesingle(request):
     r3 = requests.get('http://localhost/messenger/3.php',
                       params={'type': 'deletemessage', 'id': id})
     r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': receive, 'email1': b})
-    if(r.text == ""):
-        request.session['nomessage']=1;
-    else:
-        request.session['nomessage'] = 0;
+
+
+
     bhindi = json.loads(r.text)
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
     r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
-    return HttpResponse(
-        render(request, 'xyz.html', {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json()}))
+
+    if(not r.json()):
+        request.session["msg"] = '0';
+        return HttpResponse(
+            render(request, 'xyz.html', {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json() , 'msg':'0'}))
+    else:
+        request.session["msg"] = '1';
+        return HttpResponse(
+            render(request, 'xyz.html',
+                   {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json(), 'msg': '1'}))
+
+
 
 
 

@@ -728,7 +728,7 @@ body {
 {% for i in uniq_user %}
 {{i.profile}}
 {% endfor %}
-<label id="status">how r u???</label>
+<label id="status">{{request.session.msg}}</label>
 <label id="message_check" >{{request.session.nomessage}}</label>
 <label id="myname" hidden="hidden">{{request.session.user}}</label>
 <a href="/web_messenger/logout">logout</a>
@@ -953,8 +953,8 @@ body {
           <!--<div class="col-sm-1 col-xs-1 reply-emojis">
             <i class="fa fa-smile-o fa-2x"></i>
           </div>-->
-          <div class="col-sm-9 col-xs-9 reply-main" id="reply-main">
-            <textarea class="form-control" rows="1" id="comment"></textarea>
+          <div class="col-sm-9 col-xs-9 reply-main" id="reply-main" style="width=90%">
+            <textarea class="form-control" rows="1" id="comment" cols="100"></textarea>
           </div>
           <!--<div class="col-sm-1 col-xs-1 reply-recording">
             <i class="fa fa-microphone fa-2x" aria-hidden="true"></i>
@@ -1154,9 +1154,9 @@ function delete_msg(id1)
   document.getElementById("status").innerHTML=id1;
   var name1=document.getElementById("name_chat").innerHTML;
    $.post("/web_messenger/deletesingle",{id:id1,name:name1}).done(function(data){
-          document.getElementById("html1").innerHTML=data;
+            document.getElementById("html1").innerHTML=data;
             document.getElementById("name_chat").innerHTML=name1;
-              document.getElementById("rightside").style.display='block';
+            document.getElementById("rightside").style.display='block';
             document.getElementById("comment").value="";
             var data={{ user_list | safe }};
             var myname=document.getElementById("myname").innerHTML;
@@ -1173,10 +1173,14 @@ function delete_msg(id1)
                 document.getElementById("myimage").src=path;
               }
             }
-            var msg={{ my_dict | safe }};
-            if (msg == "")
+            var msg=document.getElementById("status").innerHTML;
+            if(msg ==0 )
             {
                document.getElementById("rightside").style.display='none';
+            }
+            else
+            {
+               document.getElementById("rightside").style.display='block';
             }
       });
 
