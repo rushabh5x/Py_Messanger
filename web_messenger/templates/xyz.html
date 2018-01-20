@@ -738,6 +738,7 @@ body {
           <div class="row heading">
             <div class="col-sm-3 col-xs-3 heading-avatar">
               <div class="heading-avatar-icon">
+                {% load staticfiles %}
                 {% for v in user_list %}
                 {% if v.email_id == request.session.user %}
                 <img id="myimage" height="200" class="user" src="/static/image/{{v.Profile}}">
@@ -1129,6 +1130,7 @@ function onFileSelected(event) {
 
   reader.onload = function(event) {
     imgtag.src = event.target.result;
+    
    $.post("/web_messenger/updateprofile",{pic:event.target.result}).done(function(data){
 
 
