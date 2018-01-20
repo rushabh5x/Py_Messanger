@@ -1,12 +1,6 @@
 
 
-          <div class="row message-previous">
-            <div class="col-sm-12 previous">
-              <a onclick="previous(this)" id="ankitjain28" name="20">
-              Show Previous Message!
-              </a>
-            </div>
-          </div>
+
           {% for x in my_dict %}
             {% if x.Sender == request.session.user %}
           <div class="row message-body" id="messgae-body" >

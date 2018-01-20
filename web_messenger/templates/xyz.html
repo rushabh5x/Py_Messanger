@@ -58,14 +58,14 @@
 
 .dropdown-content1 {
     display: none;
-    position: realative;
+    position: absolute;
 
 
     background-color: #f9f9f9;
     max-width: 70px;
-    max-height:50px;
+    max-height:60px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 50;
 }
 
 
@@ -725,13 +725,10 @@ body {
 
 <body onload="foo()">
 {% csrf_token %}
-{% for i in uniq_user %}
-{{i.profile}}
-{% endfor %}
-<label id="status">{{request.session.msg}}</label>
-<label id="message_check" >{{request.session.nomessage}}</label>
+
+<label id="status" hidden="hidden">{{request.session.msg}}</label>
+<label id="message_check" hidden="hidden">{{request.session.nomessage}}</label>
 <label id="myname" hidden="hidden">{{request.session.user}}</label>
-<a href="/web_messenger/logout">logout</a>
   <div class="container app">
     <div class="row app-one">
 
@@ -895,13 +892,7 @@ body {
         <!-- Message Box -->
         <div class="row message" id="conversation">
 
-          <div class="row message-previous">
-            <div class="col-sm-12 previous">
-              <a onclick="previous(this)" id="ankitjain28" name="20">
-              Show Previous Message!
-              </a>
-            </div>
-          </div>
+
           {% for x in my_dict %}
             {% if x.Sender == request.session.user %}
 
@@ -1073,10 +1064,11 @@ var x=document.getElementById("composeText");
     elem.style.display = 'none';
     var data={{ user_list | safe }};
     var data2={{ uniq_user | safe }};
+    var user=document.getElementById("myname").innerHTML;
     for(var v in data)
     {
 
-      if((x.value == data[v].email_id))
+      if((x.value == data[v].email_id) && (x.value != user))
       {
         document.getElementById("new_people").innerHTML=x.value;
         document.getElementById("new_people").value=x.value;
@@ -1112,16 +1104,17 @@ function demo3()
 
   var name=document.getElementById("new_people").innerHTML;
   var data={{ user_list | safe }};
+  var user= document.getElementById("myname").innerHTML;
   for(var v in data)
   {
-    if(name == data[v].email_id)
+    if((name == data[v].email_id) && (name != user) )
     {
       var path="http://127.0.0.1:8000/static/image/"+data[v].Profile;
       document.getElementById("profile_name_chat").src=path;
     }
   }
   document.getElementById("name_chat").innerHTML=name;
-  document.getElementById("status").innerHTML=document.getElementById("new_people").innerHTML;
+
   document.getElementById("rightside").style.display='block';
   document.getElementById("rightside").style.visiblity='visible';
 
@@ -1142,7 +1135,7 @@ function onFileSelected(event) {
       });
 
 
-    document.getElementById("status").innerHTML=selectedFile.name;
+
   };
 
   reader.readAsDataURL(selectedFile);
@@ -1151,7 +1144,7 @@ function onFileSelected(event) {
 function delete_msg(id1)
 {
 
-  document.getElementById("status").innerHTML=id1;
+
   var name1=document.getElementById("name_chat").innerHTML;
    $.post("/web_messenger/deletesingle",{id:id1,name:name1}).done(function(data){
             document.getElementById("html1").innerHTML=data;

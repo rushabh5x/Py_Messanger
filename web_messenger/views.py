@@ -68,6 +68,10 @@ def register(request):
     return HttpResponseRedirect(reverse('login'))
 
 def test(request):
+    if(request.session["user"] == ""):
+        messages.info(request, 'Please login')
+
+        return HttpResponseRedirect(reverse('login'))
 
     a='def@xyz.com'
     b=request.session["user"]
@@ -78,7 +82,7 @@ def test(request):
     #if a is not None:
 
     r=requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': a , 'email1':b})
-    bhindi=json.loads(r.text)
+    bhindi=json.loads(r. text)
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
     r2= requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
     if (not r.json()):
@@ -101,6 +105,7 @@ def abcd(request):
 
 def logout(request):
     request.session["user"]="";
+    request.session["msg"] = "";
     messages.info(request, 'You are sucessfully logged out')
 
     return HttpResponseRedirect(reverse('login'))
