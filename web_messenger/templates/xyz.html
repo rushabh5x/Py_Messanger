@@ -3,6 +3,7 @@
 <html lang="en" id="html1">
 <head>
     <meta charset="utf-8">
+    <meta Http-Equiv="Cache-Control" Content="no-cache">
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
     <title>Chat Screen Module</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -742,6 +743,7 @@ body {
                 {% for v in user_list %}
                 {% if v.email_id == request.session.user %}
                 <img id="myimage" height="200" class="user" src="/static/image/{{v.Profile}}">
+
                 {% endif %}
                 {% endfor %}
               </div>
@@ -1040,12 +1042,12 @@ function send()
             {
               if(name == data[v].email_id)
               {
-                var path="http://127.0.0.1:8000/static/image/"+data[v].Profile;
+                var path="/static/image/"+data[v].Profile;
                 document.getElementById("profile_name_chat").src=path;
               }
               else if(myname == data[v].email_id)
               {
-                var path="http://127.0.0.1:8000/static/image/"+data[v].Profile;
+                var path="/static/image/"+data[v].Profile;
                 document.getElementById("myimage").src=path;
               }
             }
@@ -1074,7 +1076,7 @@ var x=document.getElementById("composeText");
         document.getElementById("new_people").innerHTML=x.value;
         document.getElementById("new_people").value=x.value;
         elem.style.display = 'block';
-        var path="http://127.0.0.1:8000/static/image/"+data[v].Profile;
+        var path="/static/image/"+data[v].Profile;
         document.getElementById("new_people_profile").src=path;
 
 
@@ -1092,7 +1094,7 @@ function foo()
     {
       if((myname == data[v].email_id))
       {
-        var path="http://127.0.0.1:8000/static/image/"+data[v].Profile;
+        var path="/static/image/"+data[v].Profile;
         document.getElementById("myimage").src=path;
 
       }
@@ -1110,7 +1112,7 @@ function demo3()
   {
     if((name == data[v].email_id) && (name != user) )
     {
-      var path="http://127.0.0.1:8000/static/image/"+data[v].Profile;
+      var path="/static/image/"+data[v].Profile;
       document.getElementById("profile_name_chat").src=path;
     }
   }
@@ -1130,7 +1132,7 @@ function onFileSelected(event) {
 
   reader.onload = function(event) {
     imgtag.src = event.target.result;
-    
+
    $.post("/web_messenger/updateprofile",{pic:event.target.result}).done(function(data){
 
 
@@ -1159,12 +1161,12 @@ function delete_msg(id1)
             {
               if(name1 == data[v].email_id)
               {
-                var path="http://127.0.0.1:8000/static/image/"+data[v].Profile;
+                var path="/static/image/"+data[v].Profile;
                 document.getElementById("profile_name_chat").src=path;
               }
               else if(myname == data[v].email_id)
               {
-                var path="http://127.0.0.1:8000/static/image/"+data[v].Profile;
+                var path="/static/image/"+data[v].Profile;
                 document.getElementById("myimage").src=path;
               }
             }

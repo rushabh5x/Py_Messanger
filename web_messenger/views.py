@@ -15,10 +15,28 @@ def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
 def login(request):
+    if(request.session["user"] != ""):
+        a = 'jalpapatel@gmail.com'
+        b = request.session["user"]
+        # if a is not None:
+        #   return HttpResponse(a)
+        r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'email': a, 'email1': b})
+
+        r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
+        r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
+        if (not r.json()):
+            request.session["msg"] = '0';
+        else:
+            request.session["msg"] = '1';
+
+        return render(request, 'xyz.html',
+                      {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json(), 'msg': '1'})
 
     return render(request,'login.html')
 
 def validation(request):
+    #if(request.session["user"] != ""):
+      #  return HttpResponseRedirect(reverse('login'))
     unm1=request.POST['user']
     pass1=request.POST['pwd']
     r=requests.get('http://localhost/messenger/3.php',params={'type':'login','un':unm1,'pw':pass1})
