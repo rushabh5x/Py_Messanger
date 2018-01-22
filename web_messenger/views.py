@@ -166,4 +166,36 @@ def updateprofile(request):
     r = requests.post('http://localhost/messenger/3.php', data={'type': 'profilechange', 'id': b, 'pic': pic , 'path':location})
     return HttpResponse(r.text)
 
+def changepass(request):
+    if (request.session["user"] == ""):
+        messages.info(request, 'Please login')
+        return HttpResponseRedirect(reverse('login'))
 
+    b=request.session["user"]
+    password1=request.POST['new_pass']
+    re_pass=request.POST['repass']
+    if (password1 == re_pass):
+        r = requests.post('http://localhost/messenger/3.php',
+                          data={'type': 'changepwd', 'email': b, 'pass':password1})
+    else:
+        messages.info(request, 'password does not match')
+        return HttpResponseRedirect(reverse('pwdchange'))
+
+
+    a = 'jalpapatel@gmail.com'
+    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'sender': a, 'receiver': b})
+    r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
+    r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
+    if (not r.json()):
+        request.session["msg"] = '0';
+    else:
+        request.session["msg"] = '1';
+
+    return render(request, 'chatscreen.html', {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json()})
+
+def pwdchange(request):
+    if (request.session["user"] == ""):
+        messages.info(request, 'Please login')
+        return HttpResponseRedirect(reverse('login'))
+
+    return render(request, 'changepass.html')

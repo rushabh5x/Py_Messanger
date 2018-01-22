@@ -13,8 +13,8 @@ urlpatterns = [
     url(r'^logout',views.logout,name='logout'),
     url(r'^deletesingle',views.deletesingle,name='deletesingle'),
     url(r'^delete',views.delete,name='delete'),
-    url(r'^updateprofile',views.updateprofile,name='updateprofile')
-
-
+    url(r'^updateprofile',views.updateprofile,name='updateprofile'),
+    url(r'^changepass',views.changepass,name='changepass'),
+    url(r'^pwdchange',views.pwdchange,name='pwdchange')
 
 ]

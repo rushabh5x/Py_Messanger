@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>Change Password</title>
+
+  <link rel='stylesheet' href="{% static 'css/jquery-ui.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/change_pass.css' %}" media="screen" type="text/css" />
+
+</head>
+
+<body>
+
+  <div class="login-card">
+    <h1>Change Password</h1><br>
+    {% if messages %}
+
+    {% for message in messages %}
+  <h4 align="center">{{message}}</h4><span></span>
+  {% endfor %}
+  {% endif %}
+
+  <form action="changepass" method="post">
+    {% csrf_token %}
+	<input type="password" name="oldpass" placeholder="Old Password">
+    <input type="password" name="new_pass" placeholder="New Password" id="new_pass">
+    <input type="password" name="repass" placeholder="Re-Password">
+    <input type="submit" name="Change" class="login login-submit" value="Change">
+  </form>
+
+  
+</div>
+
+<!-- <div id="error"><img src="https://dl.dropboxusercontent.com/u/23299152/Delete-icon.png" /> Your caps-lock is on.</div> -->
+
+  <script src="{% static 'scripts/jquery_and_jqueryui.js' %}"></script>
+
+</body>
+
+</html>
