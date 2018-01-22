@@ -742,11 +742,11 @@ body {
                 {% for v in user_list %}
                 {% if v.email_id == request.session.user %}
                 <img id="myimage" height="200" class="user" src="/static/image/{{v.Profile}}">
-                <label>{{v.Name}}</label>
                 {% endif %}
                 {% endfor %}
               </div>
             </div>
+            <div class="col-sm-3 col-xs-3 heading-avatar"><label id="mychatname">{{request.session.username}}</label></div>
             <input type="file" id="upload" name="upload" style="visibility: hidden; width: 1px; height: 1px" onchange="onFileSelected(event)"/>
             <div class="col-sm-1 col-xs-1  heading-dot  pull-right dropdown">
               <i class="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true"></i>

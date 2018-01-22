@@ -36,6 +36,7 @@ def validation(request):
     unm1=request.POST['user']
     pass1=request.POST['pwd']
     r=requests.get('http://localhost/messenger/3.php',params={'type':'login','un':unm1,'pw':pass1})
+    request.session["username"]=r.text
     if(r.text=='0'):
         messages.info(request, 'Username or Password incorrect')
         return HttpResponseRedirect(reverse('login'))
