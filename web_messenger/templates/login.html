@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="{% static 'css/reset.min.css' %}">
 
   <link rel='stylesheet prefetch' href="{% static 'css/new3.css' %}">
-<link rel='stylesheet prefetch' href="{% static 'css/font-awesome.min1.css' %}">
+<link rel='stylesheet prefetch' href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}">
+  <script src="{% static 'scripts/jquery.min.js' %}"></script>
+  <script src="{% static 'scripts/bootstrap1.min.js' %}"></script>
 
       <link rel="stylesheet" href="{% static 'css/style2.css' %}">
 
@@ -39,7 +41,7 @@
     <form method="post" action="loginvalidation">
       {% csrf_token %}
       <div class="input-container">
-        <input type="text" id="user" required="required" name="user"/>
+        <input type="email" id="user" required="required" name="user"/>
         <label for="user">Username</label>
         <div class="bar"></div>
       </div>

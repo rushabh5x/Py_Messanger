@@ -728,7 +728,6 @@ body {
 {% csrf_token %}
 
 <label id="status" hidden="hidden">{{request.session.msg}}</label>
-<label id="message_check" hidden="hidden">{{request.session.nomessage}}</label>
 <label id="myname" hidden="hidden">{{request.session.user}}</label>
   <div class="container app">
     <div class="row app-one">
@@ -743,7 +742,7 @@ body {
                 {% for v in user_list %}
                 {% if v.email_id == request.session.user %}
                 <img id="myimage" height="200" class="user" src="/static/image/{{v.Profile}}">
-
+                <label>{{v.Name}}</label>
                 {% endif %}
                 {% endfor %}
               </div>
@@ -779,7 +778,7 @@ body {
 
           <div class="row sideBar">
             {% for value in uniq_user %}
-            <div class="row sideBar-body"  onClick="divFunction1('{{value.user}}','{{value.profile}}')">
+            <div class="row sideBar-body"  onClick="userClick('{{value.user}}','{{value.profile}}','{{value.name}}')">
               <div class="col-sm-3 col-xs-3 sideBar-avatar">
                 <div class="avatar-icon">
                   <img src="/static/image/{{value.profile}}"  height="200" class="user" id="{{value.user}}">
@@ -788,16 +787,13 @@ body {
               <div class="col-sm-9 col-xs-9 sideBar-main">
                 <div class="row">
                   <div class="col-sm-8 col-xs-8 sideBar-name">
-                    <span class="name-meta">{{value.user}}
+                    <span class="name-meta">{{value.name}}
                       <label hidden="hidden" id="msg1">{{value.user}}</label>
                   </span>
                   </div>
 
 
-                  <div class="col-sm-4 col-xs-4 pull-right sideBar-time">
-                    <span class="time-meta pull-right">18:18
-                  </span>
-                  </div>
+
                 </div>
               </div>
             </div>
@@ -826,7 +822,7 @@ body {
             <div class="col-sm-12 composeBox-inner">
               <div class="form-group has-feedback">
 
-                <input id="composeText" type="text" class="form-control" name="searchText" placeholder="Search People" onkeyup="demo1()">
+                <input id="composeText" type="text" class="form-control" name="searchText" placeholder="Search People" onkeyup="searchPeople()">
 
 
               </div>
@@ -847,15 +843,12 @@ body {
               </div>
               <div class="col-sm-9 col-xs-9 sideBar-main">
                 <div class="row">
-                  <div class="col-sm-8 col-xs-8 sideBar-name" onclick="demo3()">
+                  <div class="col-sm-8 col-xs-8 sideBar-name" onclick="newUserClick()">
                     <label id="new_people" >xyz
             </label>
 
                   </div>
-                  <div class="col-sm-4 col-xs-4 pull-right sideBar-time">
-                    <span class="time-meta pull-right">18:18
-                  </span>
-                  </div>
+
                 </div>
               </div>
             </div>
@@ -878,9 +871,10 @@ body {
             </div>
           </div>
           <div class="col-sm-8 col-xs-7 heading-name" id="name_head">
-            <label id="name_chat" >
+            <label id="name_chat" hidden="hidden" >
             </label>
-            <span class="heading-online">Online</span>
+            <label id="chat_name"></label>
+
           </div>
           <div class="col-sm-1 col-xs-1  heading-dot pull-right dropdown">
             <i class="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true"></i>
@@ -971,69 +965,59 @@ body {
 
 function delete_all()
   {
-    
     var name=document.getElementById("name_chat").innerHTML;
+    var chat_name=document.getElementById("chat_name").innerHTML;
     $.post("/web_messenger/delete",{id:name}).done(function(data){
           document.getElementById("html1").innerHTML=data;
               document.getElementById("name_chat").innerHTML=name;
-
-
+              document.getElementById("chat_name").innerHTML=chat_name;
               });
 
   }
-
-
-
-
-
 
 function my_fun1()
 {
   document.getElementById("side-two1").style.left=0;
   elem=document.getElementById("sideBar-body1");
-    elem.style.display = 'none';
-    var x=document.getElementById("composeText");
-    x.value="";
+  elem.style.display = 'none';
+  var x=document.getElementById("composeText");
+  x.value="";
 }
+
 function my_fun2(size)
 {
   document.getElementById("side-two1").style.left=size;
   elem=document.getElementById("sideBar-body1");
-    elem.style.display = 'none';
-    var x=document.getElementById("composeText");
-    x.value="";
+  elem.style.display = 'none';
+  var x=document.getElementById("composeText");
+  x.value="";
 }
 
-function divFunction1(name,profile){
-
+function userClick(name,profile,id)
+{
       $.post("/web_messenger/test",{id:name}).done(function(data){
             document.getElementById("html1").innerHTML=data;
             document.getElementById("name_chat").innerHTML=name;
+            document.getElementById("chat_name").innerHTML=id;
             document.getElementById("rightside").style.display='block';
             var path='static/image/'+profile;
 
             document.getElementById("profile_name_chat").src=document.getElementById(name).src;
-
-
-
-      })
+      });
 
 }
-function demo()
-{
-var x=document.getElementById("searchText");
-    x.value=x.value.toUpperCase();
-}
+
 
 function send()
 {
   var name=document.getElementById("name_chat").innerHTML;
-
+  var id=document.getElementById("chat_name").innerHTML
   $.post("/web_messenger/sendmessage",{id:name,receiver:document.getElementById("name_chat").innerHTML,msg:document.getElementById("comment").value
         }).done(function(data){
 
             document.getElementById("html1").innerHTML=data;
             document.getElementById("name_chat").innerHTML=name;
+            document.getElementById("chat_name").innerHTML=id;
             document.getElementById("rightside").style.display='block';
             document.getElementById("comment").value="";
             var data={{ user_list | safe }};
@@ -1056,10 +1040,7 @@ function send()
 
 }
 
-
-
-
-function demo1()
+function searchPeople()
 {
 var x=document.getElementById("composeText");
 
@@ -1102,7 +1083,7 @@ function foo()
 }
 
 
-function demo3()
+function newUserClick()
 {
 
   var name=document.getElementById("new_people").innerHTML;
@@ -1114,6 +1095,7 @@ function demo3()
     {
       var path="/static/image/"+data[v].Profile;
       document.getElementById("profile_name_chat").src=path;
+      document.getElementById("chat_name").innerHTML=data[v].Name;
     }
   }
   document.getElementById("name_chat").innerHTML=name;
@@ -1122,6 +1104,7 @@ function demo3()
   document.getElementById("rightside").style.visiblity='visible';
 
 }
+
 
 function onFileSelected(event) {
   var selectedFile = event.target.files[0];
@@ -1137,22 +1120,20 @@ function onFileSelected(event) {
 
 
       });
-
-
-
   };
 
   reader.readAsDataURL(selectedFile);
 }
 
+
 function delete_msg(id1)
 {
-
-
   var name1=document.getElementById("name_chat").innerHTML;
+  var chat_name=document.getElementById("chat_name").innerHTML;
    $.post("/web_messenger/deletesingle",{id:id1,name:name1}).done(function(data){
             document.getElementById("html1").innerHTML=data;
             document.getElementById("name_chat").innerHTML=name1;
+            document.getElementById("chat_name").innerHTML=chat_name;
             document.getElementById("rightside").style.display='block';
             document.getElementById("comment").value="";
             var data={{ user_list | safe }};
@@ -1187,13 +1168,13 @@ function delete_msg(id1)
 setInterval(function ()
 {
   var name=document.getElementById("name_chat").innerHTML;
-  
+  var chat_name=document.getElementById("chat_name").innerHTML;
   if(name != '')
   {
   $.post("/web_messenger/autorefresh",{id:name}).done(function(data){
             document.getElementById("conversation").innerHTML=data;
             document.getElementById("name_chat").innerHTML=name;
-
+            document.getElementById("chat_name").innerHTML=chat_name;
       });
       }
 
