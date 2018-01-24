@@ -1,0 +1,36 @@
+
+{% for value in uniq_user %}
+            <div class="row sideBar-body"  onClick="userClick('{{value.user}}','{{value.profile}}','{{value.name}}')">
+              <div class="col-sm-3 col-xs-3 sideBar-avatar">
+                <div class="avatar-icon">
+                  <img src="/static/image/{{value.profile}}"  height="200" class="user" id="{{value.user}}">
+                </div>
+              </div>
+              <div class="col-sm-9 col-xs-9 sideBar-main">
+                <div class="row">
+
+                  <div class="col-sm-8 col-xs-8 sideBar-name">
+
+                      {% if value.user in all_msg %}
+
+                    <span class="name-meta" style="font-weight:bold">{{value.name}}
+                      <label hidden="hidden" id="msg1">{{value.user}}</label>
+                      <div class="foo blue"></div>
+                    </span>
+                      {% else %}
+                      <span class="name-meta" >{{value.name}}
+                      <label hidden="hidden" id="msg2">{{value.user}}</label></span>
+
+                      {% endif %}
+
+
+
+
+                  </div>
+
+
+
+                </div>
+              </div>
+            </div>
+            {% endfor %}

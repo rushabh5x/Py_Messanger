@@ -16,18 +16,13 @@ def index(request):
 
 def login(request):
     if(request.session["user"] != ""):
-        a = 'jalpapatel@gmail.com'
         b = request.session["user"]
-        r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'sender': a, 'receiver': b})
         r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
         r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
-        if (not r.json()):
-            request.session["msg"] = '0';
-        else:
-            request.session["msg"] = '1';
+        request.session["msg"] = '0';
 
         return render(request, 'chatscreen.html',
-                      {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json()})
+                      { 'uniq_user': r1.json(), 'user_list': r2.json()})
 
     return render(request,'login.html')
 
@@ -42,17 +37,12 @@ def validation(request):
         return HttpResponseRedirect(reverse('login'))
     else:
         request.session["user"]=unm1
-        a = 'jalpapatel@gmail.com'
         b = request.session["user"]
-        r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'sender': a, 'receiver': b})
         r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
         r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
-        if (not r.json()):
-            request.session["msg"] = '0';
-        else:
-            request.session["msg"] = '1';
+        request.session["msg"] = '0';
 
-        return render(request, 'chatscreen.html', { 'my_dict':r.json(),'uniq_user': r1.json(), 'user_list': r2.json()})
+        return render(request, 'chatscreen.html', { 'uniq_user': r1.json(), 'user_list': r2.json()})
 
 
 
@@ -73,15 +63,13 @@ def test(request):
     if(request.session["user"] == ""):
         messages.info(request, 'Please login')
         return HttpResponseRedirect(reverse('login'))
-
-    a='def@xyz.com'
     b=request.session["user"]
 
     if request.method == 'POST':
         a = request.POST.get("id")
 
 
-    r=requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'sender': a , 'receiver':b})
+    r=requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'sender': a , 'receiver':b,'receive':b})
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
     r2= requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
     if (not r.json()):
@@ -106,7 +94,7 @@ def sendmessage(request):
     b = request.session["user"]
     r3 = requests.get('http://localhost/messenger/3.php',
                       params={'type': 'sendmessage', 'sender': b, 'receiver': receive, 'data': message})
-    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'sender': receive, 'receiver':b})
+    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'sender': receive, 'receiver':b,'receive':b})
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
     r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
     if (not r.json()):
@@ -120,7 +108,7 @@ def delete(request):
     receive = request.session["user"]
     send=request.POST.get("id")
     r3= requests.get('http://localhost/messenger/3.php', params={'type': 'deleteallmessage', 'sender': send, 'receiver': receive})
-    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'sender': receive, 'receiver': send})
+    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'sender': receive, 'receiver': send,'receive':receive})
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': receive})
     r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
     if (not r.json()):
@@ -136,18 +124,16 @@ def deletesingle(request):
     b = request.session["user"]
     r3 = requests.get('http://localhost/messenger/3.php',
                       params={'type': 'deletemessage', 'id': id})
-    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'sender': receive, 'receiver': b})
+    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'sender': receive, 'receiver': b,'receive':b})
 
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
     r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
 
     if(not r.json()):
         request.session["msg"] = '0';
-        return HttpResponse(
-            render(request, 'chatscreen.html', {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json() }))
     else:
         request.session["msg"] = '1';
-        return HttpResponse(
+    return HttpResponse(
             render(request, 'chatscreen.html',
                    {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json()}))
 
@@ -155,9 +141,17 @@ def deletesingle(request):
 def autorefresh(request):
     a = request.POST.get("id")
     b = request.session["user"]
-    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'sender': a , 'receiver': b})
+    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'sender': a , 'receiver': b,'receive':b})
     return HttpResponse(
         render(request, 'refresh.html', {'my_dict': r.json()}))
+
+def autorefresh1(request):
+    b = request.session["user"]
+    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers',  'email': b})
+    r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getallmessage', 'receive': b})
+    return HttpResponse(
+        render(request, 'uniq_user.html', {'uniq_user': r.json(),'all_msg':r1.json()}))
+
 
 
 def updateprofile(request):
@@ -181,18 +175,10 @@ def changepass(request):
     else:
         messages.info(request, 'password does not match')
         return HttpResponseRedirect(reverse('pwdchange'))
-
-
-    a = 'jalpapatel@gmail.com'
-    r = requests.get('http://localhost/messenger/3.php', params={'type': 'getmessage', 'sender': a, 'receiver': b})
     r1 = requests.get('http://localhost/messenger/3.php', params={'type': 'getusers', 'email': b})
     r2 = requests.get('http://localhost/messenger/3.php', params={'type': 'getuserlist'})
-    if (not r.json()):
-        request.session["msg"] = '0';
-    else:
-        request.session["msg"] = '1';
-
-    return render(request, 'chatscreen.html', {'my_dict': r.json(), 'uniq_user': r1.json(), 'user_list': r2.json()})
+    request.session["msg"] = '0';
+    return render(request, 'chatscreen.html', { 'uniq_user': r1.json(), 'user_list': r2.json()})
 
 def pwdchange(request):
     if (request.session["user"] == ""):

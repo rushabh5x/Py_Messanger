@@ -11,6 +11,19 @@
     <style type="text/css">
 
 
+    .foo {
+  float: right;
+  width: 10px;
+  height: 10px;
+  margin: 5px;
+  border: 1px solid rgba(0, 0, 0, .2);
+}
+
+.blue {
+  background: #13b4ff;
+}
+
+
     .user {
   display: inline-block;
   width: 50px;
@@ -777,7 +790,7 @@ body {
           <!-- Search Box End -->
           <!-- sideBar -->
 
-          <div class="row sideBar">
+          <div class="row sideBar" id="row-sidebar">
             {% for value in uniq_user %}
             <div class="row sideBar-body"  onClick="userClick('{{value.user}}','{{value.profile}}','{{value.name}}')">
               <div class="col-sm-3 col-xs-3 sideBar-avatar">
@@ -788,7 +801,7 @@ body {
               <div class="col-sm-9 col-xs-9 sideBar-main">
                 <div class="row">
                   <div class="col-sm-8 col-xs-8 sideBar-name">
-                    <span class="name-meta">{{value.name}}
+                    <span class="name-meta" id="{{value.name}}">{{value.name}}
                       <label hidden="hidden" id="msg1">{{value.user}}</label>
                   </span>
                   </div>
@@ -1170,6 +1183,7 @@ setInterval(function ()
 {
   var name=document.getElementById("name_chat").innerHTML;
   var chat_name=document.getElementById("chat_name").innerHTML;
+  var data={{ uniq_user| safe }}
   if(name != '')
   {
   $.post("/web_messenger/autorefresh",{id:name}).done(function(data){
@@ -1177,7 +1191,18 @@ setInterval(function ()
             document.getElementById("name_chat").innerHTML=name;
             document.getElementById("chat_name").innerHTML=chat_name;
       });
-      }
+  }
+  $.post("/web_messenger/autorefresh1").done(function(data){
+            document.getElementById("row-sidebar").innerHTML=data;
+
+
+
+      });
+
+
+
+
+
 
 }
 
