@@ -74,7 +74,6 @@ def test(request):
         messages.info(request, 'Please login')
         return HttpResponseRedirect(reverse('login'))
 
-    a='def@xyz.com'
     b=request.session["user"]
 
     if request.method == 'POST':
